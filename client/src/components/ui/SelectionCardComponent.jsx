@@ -90,12 +90,10 @@ export function SelectionCardComponent({
         </ul>
       )}
 
-      {/* Optional nested children (rendered via the A2UI renderer) */}
-      {children.length > 0 && (
+      {/* Optional nested children */}
+      {children && (
         <div className="a2ui-selection-card__children">
-          {children.map((child, index) => (
-            <A2UIRenderer key={child.id || `${id}-child-${index}`} node={child} />
-          ))}
+          {children}
         </div>
       )}
 

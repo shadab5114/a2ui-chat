@@ -1,0 +1,135 @@
+{
+  "$id": "https://telcoconnect.example.com/a2ui/catalogs/basic/catalog.json",
+  "title": "TelcoConnect Basic Catalog",
+  "description": "Core layout and interactive components.",
+  "components": {
+    "Container": {
+      "type": "object",
+      "properties": {
+        "component": { "const": "Container" },
+        "id": { "type": "string" },
+        "children": { "type": "array", "items": { "$ref": "#/$defs/AnyComponent" } },
+        "direction": { "type": "string", "enum": ["row", "column"], "default": "column" },
+        "gap": { "type": "string", "enum": ["none", "xs", "sm", "md", "lg", "xl"], "default": "md" },
+        "padding": { "type": "string", "enum": ["none", "sm", "md", "lg"], "default": "none" },
+        "align": { "type": "string", "enum": ["start", "center", "end", "stretch"], "default": "stretch" },
+        "justify": { "type": "string", "enum": ["start", "center", "end", "between", "around"], "default": "start" },
+        "wrap": { "type": "boolean", "default": false },
+        "variant": { "type": "string", "enum": ["default", "card", "elevated", "outlined", "glass"], "default": "default" }
+      },
+      "required": ["component", "id", "children"]
+    },
+    "Text": {
+      "type": "object",
+      "properties": {
+        "component": { "const": "Text" },
+        "id": { "type": "string" },
+        "text": { "type": "string" },
+        "variant": { "type": "string", "enum": ["h1", "h2", "h3", "h4", "h5", "caption", "body", "overline"], "default": "body" },
+        "color": { "type": "string", "enum": ["default", "muted", "accent", "success", "warning", "error", "inverted"], "default": "default" },
+        "align": { "type": "string", "enum": ["left", "center", "right"], "default": "left" }
+      },
+      "required": ["component", "id", "text"]
+    },
+    "Button": {
+      "type": "object",
+      "properties": {
+        "component": { "const": "Button" },
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "variant": { "type": "string", "enum": ["primary", "secondary", "outline", "ghost", "danger"], "default": "primary" },
+        "size": { "type": "string", "enum": ["sm", "md", "lg"], "default": "md" },
+        "disabled": { "type": "boolean", "default": false },
+        "fullWidth": { "type": "boolean", "default": false },
+        "action": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string" },
+            "payload": { "type": "object" }
+          },
+          "required": ["type"]
+        },
+        "icon": { "type": "string" }
+      },
+      "required": ["component", "id", "label"]
+    },
+    "SelectionCard": {
+      "type": "object",
+      "properties": {
+        "component": { "const": "SelectionCard" },
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "price": { "type": "string" },
+        "features": { "type": "array", "items": { "type": "string" } },
+        "badge": { "type": "string" },
+        "badgeVariant": { "type": "string", "enum": ["default", "accent", "success", "warning"], "default": "default" },
+        "bindingKey": { "type": "string" },
+        "action": { "type": "object", "properties": { "type": { "type": "string" }, "payload": { "type": "object" } } },
+        "highlighted": { "type": "boolean", "default": false },
+        "children": { "type": "array", "items": { "$ref": "#/$defs/AnyComponent" } }
+      },
+      "required": ["component", "id", "title"]
+    },
+    "Badge": {
+      "type": "object",
+      "properties": {
+        "component": { "const": "Badge" },
+        "id": { "type": "string" },
+        "text": { "type": "string" },
+        "variant": { "type": "string", "enum": ["default", "accent", "success", "warning", "error", "info"], "default": "default" },
+        "size": { "type": "string", "enum": ["sm", "md"], "default": "md" }
+      },
+      "required": ["component", "id", "text"]
+    },
+    "Toggle": {
+      "type": "object",
+      "properties": {
+        "component": { "const": "Toggle" },
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "bindingKey": { "type": "string" },
+        "defaultValue": { "type": "boolean", "default": false },
+        "disabled": { "type": "boolean", "default": false },
+        "description": { "type": "string" }
+      },
+      "required": ["component", "id", "label", "bindingKey"]
+    },
+    "Divider": {
+      "type": "object",
+      "properties": {
+        "component": { "const": "Divider" },
+        "id": { "type": "string" },
+        "spacing": { "type": "string", "enum": ["sm", "md", "lg"], "default": "md" }
+      },
+      "required": ["component", "id"]
+    },
+    "Icon": {
+      "type": "object",
+      "properties": {
+        "component": { "const": "Icon" },
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "size": { "type": "string", "enum": ["sm", "md", "lg"], "default": "md" },
+        "color": { "type": "string", "enum": ["default", "muted", "accent", "success", "warning", "error"], "default": "default" }
+      },
+      "required": ["component", "id", "name"]
+    },
+    "PerkCard": {
+      "type": "object",
+      "properties": {
+        "component": { "const": "PerkCard" },
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "string" },
+        "icon": { "type": "string" },
+        "bindingKey": { "type": "string" },
+        "included": { "type": "boolean", "default": false },
+        "badge": { "type": "string" },
+        "badgeVariant": { "type": "string", "enum": ["default", "accent", "success", "warning"], "default": "default" }
+      },
+      "required": ["component", "id", "title", "bindingKey"]
+    }
+  }
+}

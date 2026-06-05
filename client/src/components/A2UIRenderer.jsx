@@ -48,6 +48,10 @@ import { DividerComponent } from './ui/DividerComponent';
 import { IconComponent } from './ui/IconComponent';
 import { PerkCardComponent } from './ui/PerkCardComponent';
 
+// Import raw MUI components for the hybrid catalog extension
+import { Card as MuiCard, Chip as MuiChip } from '@mui/material';
+import { IconRenderer as MuiIcon } from './ui/IconRenderer';
+
 /**
  * COMPONENT_MAP — The Client-Side Allowlist
  *
@@ -72,6 +76,11 @@ const COMPONENT_MAP = {
   Divider:       DividerComponent,
   Icon:          IconComponent,
   PerkCard:      PerkCardComponent,
+  
+  // MUI Extensions (Directly mapped raw components)
+  MuiCard,
+  MuiChip,
+  MuiIcon,
 };
 
 /**
@@ -115,12 +124,23 @@ export function A2UIRenderer({ node }) {
   }
 
   // ── Render the component with its props ────────────────────────────────
-  // We spread the node properties directly to the React component.
-  // Each component only destructures the props it knows about,
-  // so unknown props are harmlessly ignored.
-  const { component, ...props } = node;
+  // We extract 'component' and 'children' from the JSON node.
+  const { component, children, ...props } = node;
 
-  return <Component {...props} />;
+  // ── Handle Nested Children ─────────────────────────────────────────────
+  // Raw MUI components expect React Elements as children, not JSON objects.
+  // We recursively map the JSON children array into A2UIRenderer instances.
+  const renderedChildren = children 
+    ? children.map((childNode, i) => (
+        <A2UIRenderer key={childNode.id || i} node={childNode} />
+      ))
+    : null;
+
+  return (
+    <Component {...props}>
+      {renderedChildren}
+    </Component>
+  );
 }
 
 /**

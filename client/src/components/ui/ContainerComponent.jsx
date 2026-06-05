@@ -46,9 +46,7 @@ export function ContainerComponent({ id, children = [], direction = 'column', ga
       aria-label={accessibility?.label}
       aria-description={accessibility?.description}
     >
-      {children.map((child, index) => (
-        <A2UIRenderer key={child.id || `${id}-child-${index}`} node={child} />
-      ))}
+      {children}
     </div>
   );
 }

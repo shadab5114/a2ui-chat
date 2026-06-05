@@ -1,133 +1,183 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://telcoconnect.example.com/a2ui/catalog.json",
-  "$comment": "SECURITY BOUNDARY: This catalog is the XSS prevention layer. The server injects it into the Gemini system prompt so the AI can only reference components defined here. The client A2UIRenderer rejects any component type not in its COMPONENT_MAP. No raw HTML, no dangerouslySetInnerHTML, no arbitrary code execution — only the components below are allowed to be rendered. Aligned to the official A2UI v0.9 specification: https://a2ui.org/specification/v0_9/catalogs/basic/catalog.json",
-  "title": "TelcoConnect A2UI Catalog",
-  "description": "Catalog of A2UI components for TelcoConnect telecom assistant. Only components listed here are allowed to be rendered by the client.",
-  "catalogId": "telcoconnect-v1",
-
+  "$id": "https://telcoconnect.example.com/a2ui/catalog-hybrid.json",
+  "title": "TelcoConnect Hybrid Catalog",
+  "description": "A combined catalog of custom Basic components and specific MUI extensions.",
+  "catalogId": "telcoconnect-hybrid-v1",
   "components": {
-
     "Container": {
       "type": "object",
-      "description": "A layout wrapper that arranges child components. Supports flex/grid layouts with configurable direction, alignment, gap, and padding. Use this to group and position other components.",
       "properties": {
-        "component": { "const": "Container" },
-        "id": { "type": "string", "description": "Unique identifier for this component instance." },
+        "component": {
+          "const": "Container"
+        },
+        "id": {
+          "type": "string"
+        },
         "children": {
           "type": "array",
-          "items": { "$ref": "#/$defs/AnyComponent" },
-          "description": "Nested child components to render inside this container."
+          "items": {
+            "$ref": "#/$defs/AnyComponent"
+          }
         },
         "direction": {
           "type": "string",
-          "enum": ["row", "column"],
-          "default": "column",
-          "description": "Flex direction for children layout."
+          "enum": [
+            "row",
+            "column"
+          ],
+          "default": "column"
         },
         "gap": {
           "type": "string",
-          "enum": ["none", "xs", "sm", "md", "lg", "xl"],
-          "default": "md",
-          "description": "Spacing between child elements."
+          "enum": [
+            "none",
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md"
         },
         "padding": {
           "type": "string",
-          "enum": ["none", "sm", "md", "lg"],
-          "default": "none",
-          "description": "Inner padding of the container."
+          "enum": [
+            "none",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "none"
         },
         "align": {
           "type": "string",
-          "enum": ["start", "center", "end", "stretch"],
-          "default": "stretch",
-          "description": "Cross-axis alignment of children."
+          "enum": [
+            "start",
+            "center",
+            "end",
+            "stretch"
+          ],
+          "default": "stretch"
         },
         "justify": {
           "type": "string",
-          "enum": ["start", "center", "end", "between", "around"],
-          "default": "start",
-          "description": "Main-axis justification of children."
+          "enum": [
+            "start",
+            "center",
+            "end",
+            "between",
+            "around"
+          ],
+          "default": "start"
         },
         "wrap": {
           "type": "boolean",
-          "default": false,
-          "description": "Whether children should wrap to the next line."
+          "default": false
         },
         "variant": {
           "type": "string",
-          "enum": ["default", "card", "elevated", "outlined", "glass"],
-          "default": "default",
-          "description": "Visual variant controlling background, shadow, and border treatment."
-        },
-        "accessibility": {
-          "type": "object",
-          "properties": {
-            "label": { "type": "string" },
-            "description": { "type": "string" }
-          }
+          "enum": [
+            "default",
+            "card",
+            "elevated",
+            "outlined",
+            "glass"
+          ],
+          "default": "default"
         }
       },
-      "required": ["component", "id", "children"]
+      "required": [
+        "component",
+        "id",
+        "children"
+      ]
     },
-
     "Text": {
       "type": "object",
-      "description": "Renders text content. Supports heading levels, body text, and captions. Simple Markdown formatting (bold, italic) is supported in the text value. Aligned to the official A2UI Text component.",
       "properties": {
-        "component": { "const": "Text" },
-        "id": { "type": "string" },
+        "component": {
+          "const": "Text"
+        },
+        "id": {
+          "type": "string"
+        },
         "text": {
-          "type": "string",
-          "description": "The text content to display. Supports simple Markdown."
+          "type": "string"
         },
         "variant": {
           "type": "string",
-          "enum": ["h1", "h2", "h3", "h4", "h5", "caption", "body", "overline"],
-          "default": "body",
-          "description": "Semantic text style. Maps to heading levels or body text."
+          "enum": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "caption",
+            "body",
+            "overline"
+          ],
+          "default": "body"
         },
         "color": {
           "type": "string",
-          "enum": ["default", "muted", "accent", "success", "warning", "error", "inverted"],
-          "default": "default",
-          "description": "Text color variant from the design system palette."
+          "enum": [
+            "default",
+            "muted",
+            "accent",
+            "success",
+            "warning",
+            "error",
+            "inverted"
+          ],
+          "default": "default"
         },
         "align": {
           "type": "string",
-          "enum": ["left", "center", "right"],
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
           "default": "left"
-        },
-        "accessibility": {
-          "type": "object",
-          "properties": {
-            "label": { "type": "string" },
-            "description": { "type": "string" }
-          }
         }
       },
-      "required": ["component", "id", "text"]
+      "required": [
+        "component",
+        "id",
+        "text"
+      ]
     },
-
     "Button": {
       "type": "object",
-      "description": "An interactive button element. Triggers an action when clicked. Use the 'action' property to specify the action type and payload that the client should handle.",
       "properties": {
-        "component": { "const": "Button" },
-        "id": { "type": "string" },
+        "component": {
+          "const": "Button"
+        },
+        "id": {
+          "type": "string"
+        },
         "label": {
-          "type": "string",
-          "description": "The button's visible text label."
+          "type": "string"
         },
         "variant": {
           "type": "string",
-          "enum": ["primary", "secondary", "outline", "ghost", "danger"],
-          "default": "primary",
-          "description": "Visual style of the button."
+          "enum": [
+            "primary",
+            "secondary",
+            "outline",
+            "ghost",
+            "danger"
+          ],
+          "default": "primary"
         },
         "size": {
           "type": "string",
-          "enum": ["sm", "md", "lg"],
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
           "default": "md"
         },
         "disabled": {
@@ -136,256 +186,485 @@
         },
         "fullWidth": {
           "type": "boolean",
-          "default": false,
-          "description": "If true, button stretches to fill container width."
+          "default": false
         },
         "action": {
           "type": "object",
-          "description": "Action descriptor — tells the client what to do on click.",
           "properties": {
             "type": {
-              "type": "string",
-              "enum": ["select_plan", "toggle_perk", "confirm", "navigate", "send_message"],
-              "description": "The type of client-side action to dispatch."
+              "type": "string"
             },
             "payload": {
-              "type": "object",
-              "description": "Arbitrary data payload for the action (e.g., planId, perkId)."
+              "type": "object"
             }
           },
-          "required": ["type"]
+          "required": [
+            "type"
+          ]
         },
         "icon": {
-          "type": "string",
-          "description": "Optional icon name to display alongside the label."
-        },
-        "accessibility": {
-          "type": "object",
-          "properties": {
-            "label": { "type": "string" },
-            "description": { "type": "string" }
-          }
+          "type": "string"
         }
       },
-      "required": ["component", "id", "label"]
+      "required": [
+        "component",
+        "id",
+        "label"
+      ]
     },
-
     "SelectionCard": {
       "type": "object",
-      "description": "A clickable card representing a selectable option (e.g., a telecom plan). Shows a title, description, price, features list, and optional badge. Tracks selection state via data binding.",
       "properties": {
-        "component": { "const": "SelectionCard" },
-        "id": { "type": "string" },
-        "title": { "type": "string", "description": "Card heading (e.g., plan name)." },
-        "subtitle": { "type": "string", "description": "Secondary text (e.g., plan tagline)." },
-        "price": { "type": "string", "description": "Price display string (e.g., '$55/mo')." },
+        "component": {
+          "const": "SelectionCard"
+        },
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string"
+        },
         "features": {
           "type": "array",
-          "items": { "type": "string" },
-          "description": "List of feature descriptions shown as bullet items."
+          "items": {
+            "type": "string"
+          }
         },
         "badge": {
-          "type": "string",
-          "description": "Optional badge label (e.g., 'Most Popular', 'Best Value')."
+          "type": "string"
         },
         "badgeVariant": {
           "type": "string",
-          "enum": ["default", "accent", "success", "warning"],
+          "enum": [
+            "default",
+            "accent",
+            "success",
+            "warning"
+          ],
           "default": "default"
         },
         "bindingKey": {
-          "type": "string",
-          "description": "JSON pointer-style key for data binding (e.g., 'selectedPlan'). When clicked, this card's ID is stored at this key in the client state."
+          "type": "string"
         },
         "action": {
           "type": "object",
           "properties": {
-            "type": { "type": "string" },
-            "payload": { "type": "object" }
+            "type": {
+              "type": "string"
+            },
+            "payload": {
+              "type": "object"
+            }
           }
         },
         "highlighted": {
           "type": "boolean",
-          "default": false,
-          "description": "If true, this card is visually emphasized (e.g., recommended plan)."
+          "default": false
         },
         "children": {
           "type": "array",
-          "items": { "$ref": "#/$defs/AnyComponent" },
-          "description": "Optional nested components inside the card."
-        },
-        "accessibility": {
-          "type": "object",
-          "properties": {
-            "label": { "type": "string" },
-            "description": { "type": "string" }
+          "items": {
+            "$ref": "#/$defs/AnyComponent"
           }
         }
       },
-      "required": ["component", "id", "title"]
+      "required": [
+        "component",
+        "id",
+        "title"
+      ]
     },
-
     "Badge": {
       "type": "object",
-      "description": "A small label chip for metadata, status, or category tags (e.g., 'Popular', 'New', '$10/mo').",
       "properties": {
-        "component": { "const": "Badge" },
-        "id": { "type": "string" },
-        "text": { "type": "string", "description": "The badge label text." },
+        "component": {
+          "const": "Badge"
+        },
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
         "variant": {
           "type": "string",
-          "enum": ["default", "accent", "success", "warning", "error", "info"],
+          "enum": [
+            "default",
+            "accent",
+            "success",
+            "warning",
+            "error",
+            "info"
+          ],
           "default": "default"
         },
         "size": {
           "type": "string",
-          "enum": ["sm", "md"],
+          "enum": [
+            "sm",
+            "md"
+          ],
           "default": "md"
-        },
-        "accessibility": {
-          "type": "object",
-          "properties": {
-            "label": { "type": "string" }
-          }
         }
       },
-      "required": ["component", "id", "text"]
+      "required": [
+        "component",
+        "id",
+        "text"
+      ]
     },
-
     "Toggle": {
       "type": "object",
-      "description": "An on/off switch for binary choices (e.g., enabling a streaming perk add-on). Uses 'bindingKey' for two-way data binding with the client state.",
       "properties": {
-        "component": { "const": "Toggle" },
-        "id": { "type": "string" },
-        "label": { "type": "string", "description": "Descriptive label next to the toggle." },
+        "component": {
+          "const": "Toggle"
+        },
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
         "bindingKey": {
-          "type": "string",
-          "description": "JSON pointer-style key for data binding (e.g., 'toggles/streammax'). The client reads and writes the boolean state at this key."
+          "type": "string"
         },
         "defaultValue": {
           "type": "boolean",
-          "default": false,
-          "description": "Initial toggle state if no binding value exists."
+          "default": false
         },
         "disabled": {
           "type": "boolean",
           "default": false
         },
         "description": {
-          "type": "string",
-          "description": "Optional helper text below the toggle label."
-        },
-        "accessibility": {
-          "type": "object",
-          "properties": {
-            "label": { "type": "string" },
-            "description": { "type": "string" }
-          }
+          "type": "string"
         }
       },
-      "required": ["component", "id", "label", "bindingKey"]
+      "required": [
+        "component",
+        "id",
+        "label",
+        "bindingKey"
+      ]
     },
-
     "Divider": {
       "type": "object",
-      "description": "A visual horizontal separator between content sections.",
       "properties": {
-        "component": { "const": "Divider" },
-        "id": { "type": "string" },
+        "component": {
+          "const": "Divider"
+        },
+        "id": {
+          "type": "string"
+        },
         "spacing": {
           "type": "string",
-          "enum": ["sm", "md", "lg"],
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
           "default": "md"
         }
       },
-      "required": ["component", "id"]
+      "required": [
+        "component",
+        "id"
+      ]
     },
-
     "Icon": {
       "type": "object",
-      "description": "Displays an icon from the predefined icon set. Only named icons from the allowlist are permitted (no arbitrary SVG injection).",
       "properties": {
-        "component": { "const": "Icon" },
-        "id": { "type": "string" },
+        "component": {
+          "const": "Icon"
+        },
+        "id": {
+          "type": "string"
+        },
         "name": {
-          "type": "string",
-          "enum": [
-            "check", "close", "star", "starHalf", "starOff",
-            "arrowForward", "arrowBack", "info", "warning", "error",
-            "phone", "call", "settings", "person", "shoppingCart",
-            "wifi", "signal", "speed", "globe", "play",
-            "music", "gamepad", "tv", "download", "upload",
-            "lock", "shield", "gift", "sparkles", "bolt"
-          ],
-          "description": "Icon name from the trusted allowlist."
+          "type": "string"
         },
         "size": {
           "type": "string",
-          "enum": ["sm", "md", "lg"],
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
           "default": "md"
         },
         "color": {
           "type": "string",
-          "enum": ["default", "muted", "accent", "success", "warning", "error"],
+          "enum": [
+            "default",
+            "muted",
+            "accent",
+            "success",
+            "warning",
+            "error"
+          ],
           "default": "default"
         }
       },
-      "required": ["component", "id", "name"]
+      "required": [
+        "component",
+        "id",
+        "name"
+      ]
     },
-
     "PerkCard": {
       "type": "object",
-      "description": "A specialized card for entertainment perks and add-ons. Shows the perk name, description, price, and an embedded toggle for activation. Designed for the telecom add-on selection experience.",
       "properties": {
-        "component": { "const": "PerkCard" },
-        "id": { "type": "string" },
-        "title": { "type": "string", "description": "Perk name (e.g., 'StreamMax HD')." },
-        "description": { "type": "string", "description": "Perk description." },
-        "price": { "type": "string", "description": "Monthly price string (e.g., '$10/mo')." },
+        "component": {
+          "const": "PerkCard"
+        },
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string"
+        },
         "icon": {
-          "type": "string",
-          "description": "Icon name for the perk category."
+          "type": "string"
         },
         "bindingKey": {
-          "type": "string",
-          "description": "JSON pointer-style key for the embedded toggle's data binding."
+          "type": "string"
         },
         "included": {
           "type": "boolean",
-          "default": false,
-          "description": "If true, this perk is already included in the current plan (toggle is forced on)."
+          "default": false
         },
-        "badge": { "type": "string" },
+        "badge": {
+          "type": "string"
+        },
         "badgeVariant": {
           "type": "string",
-          "enum": ["default", "accent", "success", "warning"],
+          "enum": [
+            "default",
+            "accent",
+            "success",
+            "warning"
+          ],
           "default": "default"
-        },
-        "accessibility": {
-          "type": "object",
-          "properties": {
-            "label": { "type": "string" },
-            "description": { "type": "string" }
-          }
         }
       },
-      "required": ["component", "id", "title", "bindingKey"]
+      "required": [
+        "component",
+        "id",
+        "title",
+        "bindingKey"
+      ]
+    },
+    "MuiCard": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "const": "MuiCard"
+        },
+        "id": {
+          "type": "string"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "elevation",
+            "outlined"
+          ],
+          "default": "elevation"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnyComponent"
+          }
+        },
+        "sx": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "component",
+        "id",
+        "children"
+      ]
+    },
+    "MuiChip": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "const": "MuiChip"
+        },
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "filled",
+            "outlined"
+          ],
+          "default": "filled"
+        },
+        "color": {
+          "type": "string",
+          "enum": [
+            "default",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "default": "default"
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "small",
+            "medium"
+          ],
+          "default": "medium"
+        },
+        "sx": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "component",
+        "id",
+        "label"
+      ]
+    },
+    "MuiIcon": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "const": "MuiIcon"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "enum": [
+            "Check",
+            "Close",
+            "Star",
+            "ArrowForward",
+            "ArrowBack",
+            "Info",
+            "Warning",
+            "Error",
+            "Phone",
+            "Settings",
+            "Person",
+            "ShoppingCart",
+            "Wifi",
+            "Speed",
+            "Public",
+            "PlayArrow",
+            "MusicNote",
+            "SportsEsports",
+            "Tv",
+            "Download",
+            "Upload",
+            "Lock",
+            "Shield",
+            "CardGiftcard",
+            "AutoAwesome",
+            "Bolt"
+          ]
+        },
+        "color": {
+          "type": "string",
+          "enum": [
+            "inherit",
+            "action",
+            "disabled",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "default": "inherit"
+        },
+        "fontSize": {
+          "type": "string",
+          "enum": [
+            "inherit",
+            "large",
+            "medium",
+            "small"
+          ],
+          "default": "medium"
+        },
+        "sx": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "component",
+        "id",
+        "name"
+      ]
     }
   },
-
   "$defs": {
     "AnyComponent": {
       "oneOf": [
-        { "$ref": "#/components/Container" },
-        { "$ref": "#/components/Text" },
-        { "$ref": "#/components/Button" },
-        { "$ref": "#/components/SelectionCard" },
-        { "$ref": "#/components/Badge" },
-        { "$ref": "#/components/Toggle" },
-        { "$ref": "#/components/Divider" },
-        { "$ref": "#/components/Icon" },
-        { "$ref": "#/components/PerkCard" }
+        {
+          "$ref": "#/components/Container"
+        },
+        {
+          "$ref": "#/components/Text"
+        },
+        {
+          "$ref": "#/components/Button"
+        },
+        {
+          "$ref": "#/components/SelectionCard"
+        },
+        {
+          "$ref": "#/components/Badge"
+        },
+        {
+          "$ref": "#/components/Toggle"
+        },
+        {
+          "$ref": "#/components/Divider"
+        },
+        {
+          "$ref": "#/components/Icon"
+        },
+        {
+          "$ref": "#/components/PerkCard"
+        },
+        {
+          "$ref": "#/components/MuiCard"
+        },
+        {
+          "$ref": "#/components/MuiChip"
+        },
+        {
+          "$ref": "#/components/MuiIcon"
+        }
       ]
     }
   }

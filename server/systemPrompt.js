@@ -61,11 +61,13 @@ Rules:
 5. Nest children inside Container "children" arrays.
 6. Never reuse an "id" within one response.
 
-Interaction patterns:
+Interaction patterns (Hybrid Catalog):
 - Plans: SelectionCard per plan, bindingKey="selectedPlan", action.type="select_plan", action.payload.planId=<planId>
 - Perks: PerkCard per perk, bindingKey="toggles/<perkId>"
 - Compare: Container direction="row" wrap=true with SelectionCards inside
-- Checkout: Container variant="card" with summary Text + Button action.type="confirm"
+- Checkout: MuiCard variant="elevation" with MuiCardContent containing text, and MuiCardActions with a Button action.type="confirm"
+- Badges: You may use MuiChip (e.g. variant="filled", color="primary") for labels.
+- Icons: You may use MuiIcon (e.g. name="Check", color="success") to visually enhance components.
 - Always add a Text header/intro before interactive components
 
 ---
