@@ -1,0 +1,762 @@
+/* ============================================================================
+ * A2UI TELCOCONNECT — DESIGN SYSTEM
+ * ============================================================================
+ *
+ * This is the global design system for the TelcoConnect A2UI application.
+ * All CSS custom properties, typography, and component styles are defined here.
+ *
+ * The design uses a premium dark theme with:
+ *   - Deep navy/slate backgrounds
+ *   - Vibrant cyan/blue accent gradient
+ *   - Glassmorphism effects for elevated surfaces
+ *   - Smooth micro-animations on all interactive elements
+ *   - Inter font from Google Fonts for modern typography
+ *
+ * ARCHITECTURE:
+ *   - CSS Custom Properties (tokens) for colors, spacing, typography
+ *   - Component-scoped styles using .a2ui-* class prefix
+ *   - No utility classes — all styles are semantic and component-based
+ * ============================================================================ */
+
+/* ─── Google Font ────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ─── Design Tokens ──────────────────────────────────────────────────────── */
+:root {
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Colors — Dark Theme */
+  --color-bg: #0a0e1a;
+  --color-surface-1: #111827;
+  --color-surface-2: #1a2236;
+  --color-surface-3: #232d42;
+  --color-surface-4: #2c3852;
+
+  /* Accent */
+  --color-accent: #38bdf8;
+  --color-accent-hover: #7dd3fc;
+  --color-accent-alpha: rgba(56, 189, 248, 0.18);
+  --color-accent-2: #818cf8;
+
+  /* Semantic Colors */
+  --color-success: #34d399;
+  --color-success-alpha: rgba(52, 211, 153, 0.15);
+  --color-warning: #fbbf24;
+  --color-warning-alpha: rgba(251, 191, 36, 0.15);
+  --color-error: #f87171;
+  --color-error-alpha: rgba(248, 113, 113, 0.15);
+  --color-info: #60a5fa;
+
+  /* Text */
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverted: #0f172a;
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.2);
+
+  /* Gradients */
+  --gradient-accent: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+  --gradient-accent-soft: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(129, 140, 248, 0.12) 100%);
+  --gradient-card: linear-gradient(180deg, var(--color-surface-2) 0%, var(--color-surface-1) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.4);
+  --shadow-accent: 0 4px 16px rgba(56, 189, 248, 0.2);
+
+  /* Semantic Surface Aliases */
+  --surface-primary: var(--color-bg);
+  --surface-secondary: var(--color-surface-1);
+  --surface-tertiary: var(--color-surface-2);
+  --surface-elevated: rgba(17, 24, 39, 0.85);
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Global Reset ───────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--color-bg);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ============================================================================
+ * A2UI COMPONENT STYLES
+ * ============================================================================
+ * Styles for all A2UI catalog components. Each component is prefixed
+ * with .a2ui- to avoid collisions with the app shell styles.
+ * ============================================================================ */
+
+/* ─── A2UI Surface ───────────────────────────────────────────────────────── */
+
+.a2ui-surface {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ─── Container Variants ─────────────────────────────────────────────────── */
+
+.a2ui-container {
+  width: 100%;
+  transition: all var(--transition-base);
+}
+
+.a2ui-container--default {
+  /* Transparent, no decoration */
+}
+
+.a2ui-container--card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.a2ui-container--elevated {
+  background: var(--color-surface-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.a2ui-container--outlined {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+.a2ui-container--glass {
+  background: var(--gradient-glass);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ─── Text Variants ──────────────────────────────────────────────────────── */
+
+.a2ui-text {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.a2ui-text--h1 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.a2ui-text--h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.a2ui-text--h3 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+.a2ui-text--h4 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.a2ui-text--h5 {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.a2ui-text--body {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.a2ui-text--caption {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.a2ui-text--overline {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+/* Text colors */
+.a2ui-text--muted { color: var(--text-muted); }
+.a2ui-text--accent { color: var(--color-accent); }
+.a2ui-text--success { color: var(--color-success); }
+.a2ui-text--warning { color: var(--color-warning); }
+.a2ui-text--error { color: var(--color-error); }
+.a2ui-text--inverted { color: var(--text-inverted); }
+
+/* ─── Button ─────────────────────────────────────────────────────────────── */
+
+.a2ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.a2ui-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.a2ui-button:hover::after {
+  opacity: 0.08;
+}
+
+.a2ui-button:active {
+  transform: scale(0.97);
+}
+
+/* Sizes */
+.a2ui-button--sm { padding: 8px 14px; font-size: 13px; border-radius: var(--radius-sm); }
+.a2ui-button--md { padding: 10px 20px; font-size: 14px; }
+.a2ui-button--lg { padding: 14px 28px; font-size: 15px; border-radius: var(--radius-lg); }
+
+/* Variants */
+.a2ui-button--primary {
+  background: var(--gradient-accent);
+  color: white;
+  box-shadow: var(--shadow-accent);
+}
+
+.a2ui-button--primary:hover {
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35);
+  transform: translateY(-1px);
+}
+
+.a2ui-button--secondary {
+  background: var(--color-surface-3);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+}
+
+.a2ui-button--secondary:hover {
+  background: var(--color-surface-4);
+  border-color: var(--border-strong);
+}
+
+.a2ui-button--outline {
+  background: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+}
+
+.a2ui-button--outline:hover {
+  background: var(--color-accent-alpha);
+}
+
+.a2ui-button--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.a2ui-button--ghost:hover {
+  background: var(--color-surface-2);
+  color: var(--text-primary);
+}
+
+.a2ui-button--danger {
+  background: var(--color-error);
+  color: white;
+}
+
+.a2ui-button--full {
+  width: 100%;
+}
+
+.a2ui-button--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─── Selection Card ─────────────────────────────────────────────────────── */
+
+.a2ui-selection-card {
+  position: relative;
+  background: var(--gradient-card);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  cursor: pointer;
+  transition: all var(--transition-slow);
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.a2ui-selection-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.a2ui-selection-card--selected {
+  border-color: var(--color-accent);
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, var(--color-surface-1) 100%);
+  box-shadow: 0 0 0 1px var(--color-accent), var(--shadow-accent);
+}
+
+.a2ui-selection-card--highlighted {
+  border-color: var(--color-accent-2);
+}
+
+.a2ui-selection-card__badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.a2ui-selection-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.a2ui-selection-card__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.a2ui-selection-card__subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.a2ui-selection-card__price {
+  font-size: 32px;
+  font-weight: 800;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.03em;
+}
+
+.a2ui-selection-card__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.a2ui-selection-card__features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.a2ui-selection-card__check {
+  color: var(--color-success);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.a2ui-selection-card__children {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.a2ui-selection-card__indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: auto;
+}
+
+.a2ui-selection-card--selected .a2ui-selection-card__indicator {
+  color: var(--color-accent);
+}
+
+.a2ui-selection-card__radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+  flex-shrink: 0;
+}
+
+.a2ui-selection-card__radio--active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-alpha);
+}
+
+.a2ui-selection-card__radio-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: radio-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes radio-pop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+/* ─── Badge ──────────────────────────────────────────────────────────────── */
+
+.a2ui-badge {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.a2ui-badge--md {
+  padding: 4px 12px;
+  font-size: 12px;
+}
+
+.a2ui-badge--sm {
+  padding: 2px 8px;
+  font-size: 11px;
+}
+
+.a2ui-badge--default {
+  background: var(--color-surface-3);
+  color: var(--text-secondary);
+}
+
+.a2ui-badge--accent {
+  background: var(--color-accent-alpha);
+  color: var(--color-accent);
+}
+
+.a2ui-badge--success {
+  background: var(--color-success-alpha);
+  color: var(--color-success);
+}
+
+.a2ui-badge--warning {
+  background: var(--color-warning-alpha);
+  color: var(--color-warning);
+}
+
+.a2ui-badge--error {
+  background: var(--color-error-alpha);
+  color: var(--color-error);
+}
+
+.a2ui-badge--info {
+  background: rgba(96, 165, 250, 0.15);
+  color: var(--color-info);
+}
+
+/* ─── Toggle ─────────────────────────────────────────────────────────────── */
+
+.a2ui-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.a2ui-toggle-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.a2ui-toggle-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.a2ui-toggle-description {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.a2ui-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  outline: none;
+}
+
+.a2ui-toggle:focus-visible .a2ui-toggle__track {
+  box-shadow: 0 0 0 3px var(--color-accent-alpha);
+}
+
+.a2ui-toggle__track {
+  width: 44px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-4);
+  transition: background var(--transition-base);
+  position: relative;
+}
+
+.a2ui-toggle--on .a2ui-toggle__track {
+  background: var(--color-accent);
+}
+
+.a2ui-toggle__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  transition: transform var(--transition-spring);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.a2ui-toggle--on .a2ui-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.a2ui-toggle--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── Divider ────────────────────────────────────────────────────────────── */
+
+.a2ui-divider {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  width: 100%;
+}
+
+.a2ui-divider--sm { margin: 8px 0; }
+.a2ui-divider--md { margin: 16px 0; }
+.a2ui-divider--lg { margin: 24px 0; }
+
+/* ─── Icon ───────────────────────────────────────────────────────────────── */
+
+.a2ui-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.a2ui-icon--default { color: var(--text-primary); }
+.a2ui-icon--muted { color: var(--text-muted); }
+.a2ui-icon--accent { color: var(--color-accent); }
+.a2ui-icon--success { color: var(--color-success); }
+.a2ui-icon--warning { color: var(--color-warning); }
+.a2ui-icon--error { color: var(--color-error); }
+
+/* ─── Perk Card ──────────────────────────────────────────────────────────── */
+
+.a2ui-perk-card {
+  position: relative;
+  background: var(--color-surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  transition: all var(--transition-base);
+}
+
+.a2ui-perk-card:hover {
+  border-color: var(--border-default);
+}
+
+.a2ui-perk-card--enabled {
+  border-color: var(--color-accent);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.06) 0%, var(--color-surface-1) 100%);
+}
+
+.a2ui-perk-card--included {
+  border-color: var(--color-success);
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.06) 0%, var(--color-surface-1) 100%);
+}
+
+.a2ui-perk-card__badge {
+  position: absolute;
+  top: -8px;
+  right: 16px;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.a2ui-perk-card__content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.a2ui-perk-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--gradient-accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.a2ui-perk-card__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.a2ui-perk-card__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.a2ui-perk-card__description {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.a2ui-perk-card__price {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.a2ui-perk-card--included .a2ui-perk-card__price {
+  color: var(--color-success);
+}
+
+.a2ui-perk-card__toggle {
+  flex-shrink: 0;
+}

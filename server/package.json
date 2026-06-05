@@ -1,0 +1,17 @@
+{
+  "name": "a2ui-telcoconnect-server",
+  "version": "1.0.0",
+  "description": "A2UI backend server — generates declarative UI JSON via Gemini for TelcoConnect",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.0"
+  }
+}
