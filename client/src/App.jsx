@@ -62,6 +62,7 @@ function ChatInterface() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [clientType, setClientType] = useState('basic'); // 'basic' or 'mui'
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const a2uiState = useA2UIState();
@@ -109,10 +110,15 @@ function ChatInterface() {
         parts: [{
           text: msg.role === 'user'
             ? msg.content
-            // For AI turns: just a placeholder — the system prompt has all the context
             : '[Rendered interactive UI with telecom plan/perk information]'
         }],
       }));
+
+      const metadata = {
+        a2uiClientCapabilities: {
+          supportedCatalogIds: clientType === 'mui' ? ['mui-v1', 'basic-v1'] : ['basic-v1']
+        }
+      };
 
       const response = await fetch(`${API_URL}/chat`, {
         method: 'POST',
@@ -120,6 +126,7 @@ function ChatInterface() {
         body: JSON.stringify({
           message: messageText.trim(),
           history,
+          metadata
         }),
       });
 
@@ -201,9 +208,19 @@ function ChatInterface() {
             <span className="chat-header__subtitle">AI Assistant</span>
           </div>
         </div>
-        <div className="chat-header__status">
-          <span className="chat-header__status-dot"></span>
-          <span>Online</span>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <select 
+            value={clientType} 
+            onChange={e => setClientType(e.target.value)}
+            style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
+          >
+            <option value="basic">Legacy Client (Basic UI)</option>
+            <option value="mui">Modern Web (MUI UI)</option>
+          </select>
+          <div className="chat-header__status">
+            <span className="chat-header__status-dot"></span>
+            <span>Online</span>
+          </div>
         </div>
       </header>
 

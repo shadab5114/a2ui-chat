@@ -1,0 +1,401 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://telcoconnect.example.com/a2ui/catalog-mui.json",
+  "title": "TelcoConnect MUI Catalog",
+  "description": "A catalog using only MUI components.",
+  "catalogId": "mui-v1",
+  "components": {
+    "MuiBox": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "const": "MuiBox"
+        },
+        "id": {
+          "type": "string"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnyComponent"
+          }
+        },
+        "sx": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "component",
+        "id",
+        "children"
+      ]
+    },
+    "MuiTypography": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "const": "MuiTypography"
+        },
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "subtitle1",
+            "subtitle2",
+            "body1",
+            "body2",
+            "caption",
+            "button",
+            "overline"
+          ],
+          "default": "body1"
+        },
+        "color": {
+          "type": "string",
+          "enum": [
+            "initial",
+            "inherit",
+            "primary",
+            "secondary",
+            "textPrimary",
+            "textSecondary",
+            "error"
+          ],
+          "default": "initial"
+        },
+        "align": {
+          "type": "string",
+          "enum": [
+            "inherit",
+            "left",
+            "center",
+            "right",
+            "justify"
+          ],
+          "default": "inherit"
+        }
+      },
+      "required": [
+        "component",
+        "id",
+        "text"
+      ]
+    },
+    "MuiButton": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "const": "MuiButton"
+        },
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "text",
+            "outlined",
+            "contained"
+          ],
+          "default": "contained"
+        },
+        "color": {
+          "type": "string",
+          "enum": [
+            "inherit",
+            "primary",
+            "secondary",
+            "success",
+            "error",
+            "info",
+            "warning"
+          ],
+          "default": "primary"
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "medium"
+        },
+        "action": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "payload": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      },
+      "required": [
+        "component",
+        "id",
+        "label"
+      ]
+    },
+    "MuiCard": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "const": "MuiCard"
+        },
+        "id": {
+          "type": "string"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "elevation",
+            "outlined"
+          ],
+          "default": "elevation"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnyComponent"
+          }
+        },
+        "sx": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "component",
+        "id",
+        "children"
+      ]
+    },
+    "MuiChip": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "const": "MuiChip"
+        },
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "filled",
+            "outlined"
+          ],
+          "default": "filled"
+        },
+        "color": {
+          "type": "string",
+          "enum": [
+            "default",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "default": "default"
+        },
+        "size": {
+          "type": "string",
+          "enum": [
+            "small",
+            "medium"
+          ],
+          "default": "medium"
+        },
+        "sx": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "component",
+        "id",
+        "label"
+      ]
+    },
+    "MuiIcon": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "const": "MuiIcon"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "enum": [
+            "Check",
+            "Close",
+            "Star",
+            "ArrowForward",
+            "ArrowBack",
+            "Info",
+            "Warning",
+            "Error",
+            "Phone",
+            "Settings",
+            "Person",
+            "ShoppingCart",
+            "Wifi",
+            "Speed",
+            "Public",
+            "PlayArrow",
+            "MusicNote",
+            "SportsEsports",
+            "Tv",
+            "Download",
+            "Upload",
+            "Lock",
+            "Shield",
+            "CardGiftcard",
+            "AutoAwesome",
+            "Bolt"
+          ]
+        },
+        "color": {
+          "type": "string",
+          "enum": [
+            "inherit",
+            "action",
+            "disabled",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "default": "inherit"
+        },
+        "fontSize": {
+          "type": "string",
+          "enum": [
+            "inherit",
+            "large",
+            "medium",
+            "small"
+          ],
+          "default": "medium"
+        },
+        "sx": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "component",
+        "id",
+        "name"
+      ]
+    },
+    "MuiSwitch": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "const": "MuiSwitch"
+        },
+        "id": {
+          "type": "string"
+        },
+        "bindingKey": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary",
+            "default"
+          ],
+          "default": "primary"
+        }
+      },
+      "required": [
+        "component",
+        "id",
+        "bindingKey"
+      ]
+    },
+    "MuiDivider": {
+      "type": "object",
+      "properties": {
+        "component": {
+          "const": "MuiDivider"
+        },
+        "id": {
+          "type": "string"
+        },
+        "variant": {
+          "type": "string",
+          "enum": [
+            "fullWidth",
+            "inset",
+            "middle"
+          ],
+          "default": "fullWidth"
+        }
+      },
+      "required": [
+        "component",
+        "id"
+      ]
+    }
+  },
+  "$defs": {
+    "AnyComponent": {
+      "oneOf": [
+        {
+          "$ref": "#/components/MuiBox"
+        },
+        {
+          "$ref": "#/components/MuiTypography"
+        },
+        {
+          "$ref": "#/components/MuiButton"
+        },
+        {
+          "$ref": "#/components/MuiCard"
+        },
+        {
+          "$ref": "#/components/MuiChip"
+        },
+        {
+          "$ref": "#/components/MuiIcon"
+        },
+        {
+          "$ref": "#/components/MuiSwitch"
+        },
+        {
+          "$ref": "#/components/MuiDivider"
+        }
+      ]
+    }
+  }
+}

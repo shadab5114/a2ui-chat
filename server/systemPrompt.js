@@ -40,6 +40,39 @@ export function buildSystemPrompt(catalog) {
     `  ${p.name}: ${p.features.slice(0, 5).join(' | ')}`
   ).join('\n');
 
+  const isMui = catalog.catalogId === 'mui-v1';
+
+  const interactionPatterns = isMui ? `
+Interaction patterns (MUI Catalog):
+- Plans: Use MuiCard with MuiTypography for titles and MuiButton for selection.
+- Perks: Use MuiCard with a MuiSwitch for toggling.
+- Compare: MuiBox with flex direction row and wrap true.
+- Checkout: MuiCard with MuiTypography and MuiButton.
+- Badges: Use MuiChip.
+- Icons: Use MuiIcon.
+- Always add a MuiTypography header/intro before interactive components.` : `
+Interaction patterns (Basic Catalog):
+- Plans: SelectionCard per plan, bindingKey="selectedPlan", action.type="select_plan", action.payload.planId=<planId>
+- Perks: PerkCard per perk, bindingKey="toggles/<perkId>"
+- Compare: Container direction="row" wrap=true with SelectionCards inside
+- Badges: Use Badge component.
+- Icons: Use Icon component.
+- Always add a Text header/intro before interactive components.`;
+
+  const behavioralGuidelines = isMui ? `
+- Use exact pricing and features from the knowledge base. Never hallucinate.
+- Show ALL relevant plans when asked — as MuiCards in a row MuiBox.
+- Show MuiCards with MuiSwitch when user asks about perks/add-ons.
+- Use MuiDivider to separate sections.
+- Generate a helpful MuiTypography intro before any interactive components.` : `
+- Use exact pricing and features from the knowledge base. Never hallucinate.
+- Show ALL relevant plans when asked — as SelectionCards in a row Container.
+- Show PerkCards with toggles when user asks about perks/add-ons.
+- Mark included perks with included=true on PerkCard.
+- Mark recommended plans with badge and highlighted=true on SelectionCard.
+- Use Divider to separate sections.
+- Generate a helpful Text intro before any interactive components.`;
+
   return `
 You are TelcoConnect AI, a friendly assistant for TelcoConnect (US cellular carrier).
 Help customers explore plans, compare options, manage perks, and configure service.
@@ -50,7 +83,7 @@ A2UI PROTOCOL - OUTPUT RULES (STRICT)
 
 Respond ONLY with a valid JSON object in this exact structure:
 {
-  "surfaces": [{ "surfaceId": "main", "components": [...] }]
+  "surfaces": [{ "surfaceId": "main", "catalogId": "${catalog.catalogId}", "components": [...] }]
 }
 
 Rules:
@@ -58,32 +91,15 @@ Rules:
 2. Every component needs "component" (exact type name) and "id" (unique kebab-case string).
 3. Only use component types listed in the CATALOG below. Unknown types are rejected.
 4. Only use props listed for each component. Unknown props are stripped.
-5. Nest children inside Container "children" arrays.
+5. Nest children inside "children" arrays.
 6. Never reuse an "id" within one response.
-
-Interaction patterns (Hybrid Catalog):
-- Plans: SelectionCard per plan, bindingKey="selectedPlan", action.type="select_plan", action.payload.planId=<planId>
-- Perks: PerkCard per perk, bindingKey="toggles/<perkId>"
-- Compare: Container direction="row" wrap=true with SelectionCards inside
-- Checkout: MuiCard variant="elevation" with MuiCardContent containing text, and MuiCardActions with a Button action.type="confirm"
-- Badges: You may use MuiChip (e.g. variant="filled", color="primary") for labels.
-- Icons: You may use MuiIcon (e.g. name="Check", color="success") to visually enhance components.
-- Always add a Text header/intro before interactive components
+${interactionPatterns}
 
 ---
 CATALOG (allowed components and their props)
 ---
 
 ${componentLines}
-
-Toggle.bindingKey format: "toggles/<perkId>" (e.g. "toggles/streammax")
-SelectionCard.bindingKey: "selectedPlan"
-Badge/badgeVariant values: default | accent | success | warning
-Container.variant values: default | card | elevated | outlined | glass
-Text.variant values: h1 | h2 | h3 | h4 | h5 | body | caption | overline
-Text.color values: default | muted | accent | success | warning | error
-Button.variant values: primary | secondary | outline | ghost | danger
-Icon.name allowed values: check, close, star, arrowForward, arrowBack, info, warning, error, phone, call, settings, person, shoppingCart, wifi, speed, globe, play, music, gamepad, tv, download, upload, lock, shield, gift, sparkles, bolt
 
 ---
 TELCOCONNECT KNOWLEDGE BASE
@@ -101,14 +117,7 @@ ${perkLines}
 ---
 BEHAVIORAL GUIDELINES
 ---
-
-- Use exact pricing and features from the knowledge base. Never hallucinate.
-- Show ALL relevant plans when asked — as SelectionCards in a row Container.
-- Show PerkCards with toggles when user asks about perks/add-ons.
-- Mark included perks with included=true on PerkCard.
-- Mark recommended plans with badge and highlighted=true on SelectionCard.
-- Use Divider to separate sections.
-- Generate a helpful Text intro before any interactive components.
+${behavioralGuidelines}
 
 REMEMBER: Your ENTIRE response must be valid JSON. Nothing before or after the JSON object.
 `.trim();

@@ -49,8 +49,44 @@ import { IconComponent } from './ui/IconComponent';
 import { PerkCardComponent } from './ui/PerkCardComponent';
 
 // Import raw MUI components for the hybrid catalog extension
-import { Card as MuiCard, Chip as MuiChip } from '@mui/material';
+import { 
+  Card as MuiCard, 
+  Chip as MuiChip,
+  Box as MuiBox,
+  Typography as MuiTypography,
+  Button as MuiButton,
+  Switch as MuiSwitch,
+  Divider as MuiDivider
+} from '@mui/material';
 import { IconRenderer as MuiIcon } from './ui/IconRenderer';
+
+import { useA2UIState } from '../context/A2UIStateContext';
+
+const MuiButtonAdapter = (props) => {
+  const { label, action, ...rest } = props;
+  const a2uiState = useA2UIState();
+  const onClick = () => {
+    if (action && action.type === 'select_plan') {
+      a2uiState.dispatch({ type: 'SELECT_PLAN', payload: action.payload.planId });
+    }
+  };
+  return <MuiButton {...rest} onClick={onClick}>{label}</MuiButton>;
+};
+
+const MuiSwitchAdapter = (props) => {
+  const { bindingKey, ...rest } = props;
+  const a2uiState = useA2UIState();
+  const checked = bindingKey ? !!a2uiState.toggles[bindingKey] : false;
+  const onChange = (e) => {
+    if (bindingKey) {
+      a2uiState.dispatch({
+        type: 'TOGGLE_PERK',
+        payload: { key: bindingKey, value: e.target.checked }
+      });
+    }
+  };
+  return <MuiSwitch {...rest} checked={checked} onChange={onChange} />;
+};
 
 /**
  * COMPONENT_MAP — The Client-Side Allowlist
@@ -81,6 +117,11 @@ const COMPONENT_MAP = {
   MuiCard,
   MuiChip,
   MuiIcon,
+  MuiBox,
+  MuiTypography,
+  MuiButton: MuiButtonAdapter,
+  MuiSwitch: MuiSwitchAdapter,
+  MuiDivider
 };
 
 /**
@@ -130,11 +171,23 @@ export function A2UIRenderer({ node }) {
   // ── Handle Nested Children ─────────────────────────────────────────────
   // Raw MUI components expect React Elements as children, not JSON objects.
   // We recursively map the JSON children array into A2UIRenderer instances.
-  const renderedChildren = children 
+  let renderedChildren = children 
     ? children.map((childNode, i) => (
         <A2UIRenderer key={childNode.id || i} node={childNode} />
       ))
     : null;
+
+  // ── MUI Adaptations ────────────────────────────────────────────────────
+  // Some raw MUI components expect text as children, but our JSON schema
+  // provides them as props. We adapt them here before rendering.
+  if (component === 'MuiTypography' && props.text) {
+    renderedChildren = props.text;
+    delete props.text;
+  }
+  if (component === 'MuiButton' && props.label) {
+    renderedChildren = props.label;
+    delete props.label;
+  }
 
   return (
     <Component {...props}>

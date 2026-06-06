@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://telcoconnect.example.com/a2ui/catalog-hybrid.json",
-  "title": "TelcoConnect Hybrid Catalog",
-  "description": "A combined catalog of custom Basic components and specific MUI extensions.",
-  "catalogId": "telcoconnect-hybrid-v1",
+  "$id": "https://telcoconnect.example.com/a2ui/catalog-basic.json",
+  "title": "TelcoConnect Basic Catalog",
+  "description": "A catalog of custom Basic components.",
+  "catalogId": "basic-v1",
   "components": {
     "Container": {
       "type": "object",
@@ -465,165 +465,6 @@
         "title",
         "bindingKey"
       ]
-    },
-    "MuiCard": {
-      "type": "object",
-      "properties": {
-        "component": {
-          "const": "MuiCard"
-        },
-        "id": {
-          "type": "string"
-        },
-        "variant": {
-          "type": "string",
-          "enum": [
-            "elevation",
-            "outlined"
-          ],
-          "default": "elevation"
-        },
-        "children": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/AnyComponent"
-          }
-        },
-        "sx": {
-          "type": "object"
-        }
-      },
-      "required": [
-        "component",
-        "id",
-        "children"
-      ]
-    },
-    "MuiChip": {
-      "type": "object",
-      "properties": {
-        "component": {
-          "const": "MuiChip"
-        },
-        "id": {
-          "type": "string"
-        },
-        "label": {
-          "type": "string"
-        },
-        "variant": {
-          "type": "string",
-          "enum": [
-            "filled",
-            "outlined"
-          ],
-          "default": "filled"
-        },
-        "color": {
-          "type": "string",
-          "enum": [
-            "default",
-            "primary",
-            "secondary",
-            "error",
-            "info",
-            "success",
-            "warning"
-          ],
-          "default": "default"
-        },
-        "size": {
-          "type": "string",
-          "enum": [
-            "small",
-            "medium"
-          ],
-          "default": "medium"
-        },
-        "sx": {
-          "type": "object"
-        }
-      },
-      "required": [
-        "component",
-        "id",
-        "label"
-      ]
-    },
-    "MuiIcon": {
-      "type": "object",
-      "properties": {
-        "component": {
-          "const": "MuiIcon"
-        },
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string",
-          "enum": [
-            "Check",
-            "Close",
-            "Star",
-            "ArrowForward",
-            "ArrowBack",
-            "Info",
-            "Warning",
-            "Error",
-            "Phone",
-            "Settings",
-            "Person",
-            "ShoppingCart",
-            "Wifi",
-            "Speed",
-            "Public",
-            "PlayArrow",
-            "MusicNote",
-            "SportsEsports",
-            "Tv",
-            "Download",
-            "Upload",
-            "Lock",
-            "Shield",
-            "CardGiftcard",
-            "AutoAwesome",
-            "Bolt"
-          ]
-        },
-        "color": {
-          "type": "string",
-          "enum": [
-            "inherit",
-            "action",
-            "disabled",
-            "primary",
-            "secondary",
-            "error",
-            "info",
-            "success",
-            "warning"
-          ],
-          "default": "inherit"
-        },
-        "fontSize": {
-          "type": "string",
-          "enum": [
-            "inherit",
-            "large",
-            "medium",
-            "small"
-          ],
-          "default": "medium"
-        },
-        "sx": {
-          "type": "object"
-        }
-      },
-      "required": [
-        "component",
-        "id",
-        "name"
-      ]
     }
   },
   "$defs": {
@@ -655,15 +496,6 @@
         },
         {
           "$ref": "#/components/PerkCard"
-        },
-        {
-          "$ref": "#/components/MuiCard"
-        },
-        {
-          "$ref": "#/components/MuiChip"
-        },
-        {
-          "$ref": "#/components/MuiIcon"
         }
       ]
     }

@@ -11,16 +11,13 @@
  *                ←  JSON response
  *
  * The server's responsibilities:
- *   1. Load the trusted catalog at startup (the security allowlist)
- *   2. Build the system prompt with catalog + knowledge base
- *   3. Forward user messages to Gemini via the @google/generative-ai SDK
- *   4. Parse and validate the JSON response
- *   5. Return clean A2UI JSON to the React client
+ *   1. Load the trusted catalogs at startup (the security allowlist)
+ *   2. Build the system prompt with catalog + knowledge base for each catalog
+ *   3. Negotiate the catalog based on client's supported catalogs
+ *   4. Forward user messages to Gemini via the @google/generative-ai SDK
+ *   5. Parse and validate the JSON response
+ *   6. Return clean A2UI JSON to the React client
  *
- * SECURITY NOTE:
- * The catalog is loaded once at startup and never modified at runtime.
- * The client receives the catalog separately (embedded in the frontend build)
- * and uses it to validate incoming A2UI payloads — defense in depth.
  * ============================================================================
  */
 
@@ -38,57 +35,49 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 if (!GEMINI_API_KEY) {
   console.error('❌ Missing GEMINI_API_KEY in .env file.');
-  console.error('   Copy .env.example to .env and add your key.');
-  console.error('   Get a key at: https://aistudio.google.com/apikey');
   process.exit(1);
 }
 
-// ─── Load the Trusted Catalog ───────────────────────────────────────────────
-// The catalog is loaded ONCE at startup. It defines which components the AI
-// is allowed to generate and the client is allowed to render.
+// ─── Load the Trusted Catalogs ──────────────────────────────────────────────
 
-let catalog;
+const catalogs = {};
 try {
-  const catalogRaw = readFileSync(new URL('./catalog.json', import.meta.url), 'utf-8');
-  // catalog.json is pure JSON — parse it directly (no comment stripping needed)
-  catalog = JSON.parse(catalogRaw);
-  console.log(
-    `✅ Catalog loaded: ${Object.keys(catalog.components).length} components registered`
-  );
-  console.log(`   Components: ${Object.keys(catalog.components).join(', ')}`);
+  const basicRaw = readFileSync(new URL('./catalogs/catalog-basic.json', import.meta.url), 'utf-8');
+  catalogs['basic-v1'] = JSON.parse(basicRaw);
+  
+  const muiRaw = readFileSync(new URL('./catalogs/catalog-mui.json', import.meta.url), 'utf-8');
+  catalogs['mui-v1'] = JSON.parse(muiRaw);
+
+  console.log(`✅ Catalogs loaded: [${Object.keys(catalogs).join(', ')}]`);
 } catch (err) {
-  console.error('❌ Failed to load catalog.json:', err.message);
+  console.error('❌ Failed to load catalogs:', err.message);
   process.exit(1);
 }
 
-// ─── Initialize Gemini ──────────────────────────────────────────────────────
+// ─── Initialize Gemini Models ───────────────────────────────────────────────
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+const models = {};
 
-// Build the system prompt BEFORE creating the model so it can be
-// passed to getGenerativeModel() — the correct location per the SDK.
-// Passing systemInstruction to startChat() instead causes a 400 error
-// because the SDK serializes it incorrectly at the proto level.
-const systemPrompt = buildSystemPrompt(catalog);
-
-const model = genAI.getGenerativeModel({
-  model: 'gemini-3.1-flash-lite',
-  // systemInstruction goes HERE (on the model), not in startChat()
-  systemInstruction: systemPrompt,
-  generationConfig: {
-    temperature: 0.7,
-    topP: 0.95,
-    maxOutputTokens: 8192,
-    // Force JSON output — Gemini will always return a parseable JSON string
-    responseMimeType: 'application/json',
-  },
-});
+// Initialize a model for each catalog
+for (const [catalogId, catalog] of Object.entries(catalogs)) {
+  const systemPrompt = buildSystemPrompt(catalog);
+  models[catalogId] = genAI.getGenerativeModel({
+    model: 'gemini-3.1-flash-lite',
+    systemInstruction: systemPrompt,
+    generationConfig: {
+      temperature: 0.7,
+      topP: 0.95,
+      maxOutputTokens: 8192,
+      responseMimeType: 'application/json',
+    },
+  });
+}
 
 // ─── Express App Setup ──────────────────────────────────────────────────────
 
 const app = express();
 
-// Enable CORS for the React dev server (Vite runs on 5173 by default)
 app.use(cors({
   origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000'],
   methods: ['GET', 'POST'],
@@ -101,36 +90,27 @@ app.use(express.json());
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
-    catalog: {
-      components: Object.keys(catalog.components),
-      count: Object.keys(catalog.components).length,
-    },
+    catalogs: Object.keys(catalogs)
   });
 });
 
 // ─── Catalog Endpoint ───────────────────────────────────────────────────────
-// The client can fetch the catalog to validate incoming A2UI payloads
-// (defense-in-depth: both server and client validate against the catalog)
 
 app.get('/catalog', (req, res) => {
-  res.json(catalog);
+  // Default to basic if no specific catalog is requested
+  const id = req.query.id || 'basic-v1';
+  if (catalogs[id]) {
+    res.json(catalogs[id]);
+  } else {
+    res.status(404).json({ error: 'Catalog not found' });
+  }
 });
 
 // ─── Chat Endpoint — The Core A2UI Pipeline ─────────────────────────────────
-/**
- * POST /chat
- * Body: { message: string, history?: Array<{role: string, parts: [{text: string}]}> }
- *
- * Flow:
- *   1. Receive user's text message
- *   2. Start a Gemini chat with our system prompt (catalog + KB baked in)
- *   3. Send the user's message to Gemini
- *   4. Parse Gemini's JSON response
- *   5. Return the A2UI payload to the client
- */
+
 app.post('/chat', async (req, res) => {
   try {
-    const { message, history = [] } = req.body;
+    const { message, history = [], metadata = {} } = req.body;
 
     if (!message || typeof message !== 'string') {
       return res.status(400).json({
@@ -138,14 +118,28 @@ app.post('/chat', async (req, res) => {
       });
     }
 
-    console.log(`\n💬 User: "${message}"`);
+    // ─── Catalog Negotiation ─────────────────────────────────────────────
+    let selectedCatalogId = 'basic-v1'; // fallback default
+    
+    if (metadata.a2uiClientCapabilities && metadata.a2uiClientCapabilities.supportedCatalogIds) {
+      const clientSupported = metadata.a2uiClientCapabilities.supportedCatalogIds;
+      // Find the highest preference catalog that the server supports
+      for (const id of clientSupported) {
+        if (catalogs[id]) {
+          selectedCatalogId = id;
+          break;
+        }
+      }
+    }
 
-    // Start a chat session with the system prompt and any prior history.
-    // The system prompt contains the full catalog + knowledge base,
-    // so Gemini knows exactly what components it can use and what
-    // telecom data to reference.
-    // systemInstruction is already baked into the model above.
-    // startChat() only needs the conversation history here.
+    console.log(`\n💬 User: "${message}"`);
+    console.log(`⚙️  Negotiated Catalog: ${selectedCatalogId}`);
+
+    const model = models[selectedCatalogId];
+    if (!model) {
+      throw new Error(`Model not initialized for catalog: ${selectedCatalogId}`);
+    }
+
     const chat = model.startChat({
       history: history.map(msg => ({
         role: msg.role,
@@ -153,24 +147,21 @@ app.post('/chat', async (req, res) => {
       })),
     });
 
-    // Send the user's message and await the AI's A2UI JSON response
     const result = await chat.sendMessage(message);
     const responseText = result.response.text();
 
-    console.log(`🤖 Gemini responded (${responseText.length} chars)`);
+    console.log(`🤖 Gemini responded (${responseText.length} chars) using ${selectedCatalogId}`);
 
     // ─── Parse and Validate the Response ──────────────────────────────
-    // The AI should return pure JSON. We parse it and do basic validation.
     let a2uiPayload;
     try {
       a2uiPayload = JSON.parse(responseText);
     } catch (parseErr) {
-      // If Gemini returned non-JSON (shouldn't happen with responseMimeType),
-      // wrap the text in a simple Text component as a fallback
       console.warn('⚠️  Gemini returned non-JSON, wrapping in Text component');
       a2uiPayload = {
         surfaces: [{
           surfaceId: 'main',
+          catalogId: selectedCatalogId,
           components: [{
             component: 'Text',
             id: 'fallback-text',
@@ -181,38 +172,41 @@ app.post('/chat', async (req, res) => {
       };
     }
 
-    // Basic structural validation — ensure it has the expected shape
     if (!a2uiPayload.surfaces || !Array.isArray(a2uiPayload.surfaces)) {
-      // If the AI returned a components array directly, wrap it
       if (Array.isArray(a2uiPayload.components)) {
         a2uiPayload = {
           surfaces: [{
             surfaceId: 'main',
+            catalogId: selectedCatalogId,
             components: a2uiPayload.components,
           }],
         };
       } else if (Array.isArray(a2uiPayload)) {
-        // If it returned a bare array
         a2uiPayload = {
           surfaces: [{
             surfaceId: 'main',
+            catalogId: selectedCatalogId,
             components: a2uiPayload,
           }],
         };
       }
     }
 
-    // Return the validated A2UI payload
+    // Ensure catalogId is present in surface
+    if (a2uiPayload.surfaces && a2uiPayload.surfaces.length > 0) {
+      a2uiPayload.surfaces.forEach(surface => {
+        if (!surface.catalogId) {
+          surface.catalogId = selectedCatalogId;
+        }
+      });
+    }
+
     res.json(a2uiPayload);
 
   } catch (error) {
-    // Log the full error so it's visible in the server terminal
     console.error('❌ Chat error:', error.message);
-    console.error('   Stack:', error.stack);
     if (error.errorDetails) console.error('   Gemini details:', JSON.stringify(error.errorDetails));
 
-    // Return 200 (not 500) with an A2UI error component so the frontend
-    // can render a friendly message instead of throwing on !response.ok.
     res.status(200).json({
       surfaces: [{
         surfaceId: 'main',
@@ -251,7 +245,7 @@ app.listen(PORT, () => {
 ╔══════════════════════════════════════════════════════════════╗
 ║   🚀 TelcoConnect A2UI Server                               ║
 ║   Running on: http://localhost:${PORT}                        ║
-║   Catalog:    ${Object.keys(catalog.components).length} components loaded                     ║
+║   Catalogs Loaded: ${Object.keys(catalogs).join(', ')}       ║
 ║   Model:      gemini-3.1-flash-lite                         ║
 ╚══════════════════════════════════════════════════════════════╝
   `);
