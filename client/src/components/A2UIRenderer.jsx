@@ -49,15 +49,7 @@ import { IconComponent } from './ui/IconComponent';
 import { PerkCardComponent } from './ui/PerkCardComponent';
 
 // Import raw MUI components for the hybrid catalog extension
-import { 
-  Card as MuiCard, 
-  Chip as MuiChip,
-  Box as MuiBox,
-  Typography as MuiTypography,
-  Button as MuiButton,
-  Switch as MuiSwitch,
-  Divider as MuiDivider
-} from '@mui/material';
+import * as Mui from '@mui/material';
 import { IconRenderer as MuiIcon } from './ui/IconRenderer';
 
 import { useA2UIState } from '../context/A2UIStateContext';
@@ -70,7 +62,7 @@ const MuiButtonAdapter = (props) => {
       a2uiState.dispatch({ type: 'SELECT_PLAN', payload: action.payload.planId });
     }
   };
-  return <MuiButton {...rest} onClick={onClick}>{label}</MuiButton>;
+  return <Mui.Button {...rest} onClick={onClick}>{label}</Mui.Button>;
 };
 
 const MuiSwitchAdapter = (props) => {
@@ -85,7 +77,7 @@ const MuiSwitchAdapter = (props) => {
       });
     }
   };
-  return <MuiSwitch {...rest} checked={checked} onChange={onChange} />;
+  return <Mui.Switch {...rest} checked={checked} onChange={onChange} />;
 };
 
 /**
@@ -113,16 +105,22 @@ const COMPONENT_MAP = {
   Icon:          IconComponent,
   PerkCard:      PerkCardComponent,
   
-  // MUI Extensions (Directly mapped raw components)
-  MuiCard,
-  MuiChip,
+  // Custom MUI Adapters and Extensions
   MuiIcon,
-  MuiBox,
-  MuiTypography,
   MuiButton: MuiButtonAdapter,
-  MuiSwitch: MuiSwitchAdapter,
-  MuiDivider
+  MuiSwitch: MuiSwitchAdapter
 };
+
+// Dynamically inject all MUI components into COMPONENT_MAP
+Object.keys(Mui).forEach(key => {
+  if (/^[A-Z]/.test(key) && typeof Mui[key] !== 'string' && !key.endsWith('Context') && key !== 'GlobalStyles' && key !== 'StyledEngineProvider') {
+    const prefixedKey = `Mui${key}`;
+    // Don't overwrite our custom adapters (like MuiButton, MuiSwitch, MuiIcon)
+    if (!COMPONENT_MAP[prefixedKey]) {
+      COMPONENT_MAP[prefixedKey] = Mui[key];
+    }
+  }
+});
 
 /**
  * A2UIRenderer — Recursive Component Renderer
@@ -171,11 +169,19 @@ export function A2UIRenderer({ node }) {
   // ── Handle Nested Children ─────────────────────────────────────────────
   // Raw MUI components expect React Elements as children, not JSON objects.
   // We recursively map the JSON children array into A2UIRenderer instances.
-  let renderedChildren = children 
-    ? children.map((childNode, i) => (
-        <A2UIRenderer key={childNode.id || i} node={childNode} />
-      ))
-    : null;
+  let renderedChildren = null;
+  if (children) {
+    if (Array.isArray(children)) {
+      renderedChildren = children.map((childNode, i) => {
+        if (typeof childNode === 'string' || typeof childNode === 'number') return childNode;
+        return <A2UIRenderer key={childNode?.id || i} node={childNode} />;
+      });
+    } else if (typeof children === 'string' || typeof children === 'number') {
+      renderedChildren = children;
+    } else if (typeof children === 'object') {
+      renderedChildren = <A2UIRenderer key={children.id || 'child'} node={children} />;
+    }
+  }
 
   // ── MUI Adaptations ────────────────────────────────────────────────────
   // Some raw MUI components expect text as children, but our JSON schema

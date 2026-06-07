@@ -1,46 +1,6615 @@
 {
-  "$id": "https://telcoconnect.example.com/a2ui/catalogs/mui-extensions/catalog.json",
-  "title": "MUI Extensions Catalog",
-  "description": "Specific Material-UI components used alongside the Basic Catalog.",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a2ui.org/specification/v0_9/catalogs/mui/catalog.json",
+  "title": "A2UI MUI Catalog",
+  "description": "Unified catalog of MUI components.",
+  "catalogId": "https://a2ui.org/specification/v0_9/catalogs/mui/catalog.json",
+  "$defs": {
+    "CatalogComponentCommon": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Optional unique identifier for the component."
+        }
+      }
+    }
+  },
   "components": {
-    "MuiCard": {
+    "Accordion": {
       "type": "object",
-      "properties": {
-        "component": { "const": "MuiCard" },
-        "id": { "type": "string" },
-        "variant": { "type": "string", "enum": ["elevation", "outlined"], "default": "elevation" },
-        "children": { "type": "array", "items": { "$ref": "#/$defs/AnyComponent" } },
-        "sx": { "type": "object" }
-      },
-      "required": ["component", "id", "children"]
-    },
-    "MuiChip": {
-      "type": "object",
-      "properties": {
-        "component": { "const": "MuiChip" },
-        "id": { "type": "string" },
-        "label": { "type": "string" },
-        "variant": { "type": "string", "enum": ["filled", "outlined"], "default": "filled" },
-        "color": { "type": "string", "enum": ["default", "primary", "secondary", "error", "info", "success", "warning"], "default": "default" },
-        "size": { "type": "string", "enum": ["small", "medium"], "default": "medium" },
-        "sx": { "type": "object" }
-      },
-      "required": ["component", "id", "label"]
-    },
-    "MuiIcon": {
-      "type": "object",
-      "properties": {
-        "component": { "const": "MuiIcon" },
-        "id": { "type": "string" },
-        "name": { 
-          "type": "string", 
-          "enum": ["Check", "Close", "Star", "ArrowForward", "ArrowBack", "Info", "Warning", "Error", "Phone", "Settings", "Person", "ShoppingCart", "Wifi", "Speed", "Public", "PlayArrow", "MusicNote", "SportsEsports", "Tv", "Download", "Upload", "Lock", "Shield", "CardGiftcard", "AutoAwesome", "Bolt"] 
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
         },
-        "color": { "type": "string", "enum": ["inherit", "action", "disabled", "primary", "secondary", "error", "info", "success", "warning"], "default": "inherit" },
-        "fontSize": { "type": "string", "enum": ["inherit", "large", "medium", "small"], "default": "medium" },
-        "sx": { "type": "object" }
-      },
-      "required": ["component", "id", "name"]
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Accordion"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "defaultExpanded": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableGutters": {
+              "type": "boolean"
+            },
+            "expanded": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "AccordionActions": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "AccordionActions"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "disableSpacing": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "AccordionDetails": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "AccordionDetails"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "AccordionSummary": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "AccordionSummary"
+            },
+            "sx": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Alert": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Alert"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "filled",
+                "outlined"
+              ]
+            },
+            "closeText": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "AlertTitle": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "AlertTitle"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "AppBar": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "AppBar"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "position": {
+              "type": "string",
+              "enum": [
+                "fixed",
+                "absolute",
+                "sticky",
+                "static",
+                "relative"
+              ]
+            },
+            "elevation": {
+              "type": "number"
+            },
+            "enableColorOnDark": {
+              "type": "boolean"
+            },
+            "square": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Autocomplete": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Autocomplete"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "disablePortal": {
+              "type": "boolean"
+            },
+            "expanded": {
+              "type": "boolean"
+            },
+            "focused": {
+              "type": "boolean"
+            },
+            "fullWidth": {
+              "type": "boolean"
+            },
+            "hasClearIcon": {
+              "type": "boolean"
+            },
+            "hasPopupIcon": {
+              "type": "boolean"
+            },
+            "inputFocused": {
+              "type": "boolean"
+            },
+            "popupOpen": {
+              "type": "boolean"
+            },
+            "index": {
+              "type": "number"
+            },
+            "key": {
+              "type": "number"
+            },
+            "className": {
+              "type": "string"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "inputValue": {
+              "type": "string"
+            },
+            "selected": {
+              "type": "boolean"
+            },
+            "group": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "clearText": {
+              "type": "string"
+            },
+            "closeText": {
+              "type": "string"
+            },
+            "loading": {
+              "type": "boolean"
+            },
+            "limitTags": {
+              "type": "number"
+            },
+            "defaultMuiPrevented": {
+              "type": "boolean"
+            },
+            "openText": {
+              "type": "string"
+            },
+            "readOnly": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Avatar": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Avatar"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "circular",
+                "rounded",
+                "square"
+              ]
+            },
+            "alt": {
+              "type": "string"
+            },
+            "sizes": {
+              "type": "string"
+            },
+            "src": {
+              "type": "string"
+            },
+            "srcSet": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "AvatarGroup": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "AvatarGroup"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "spacing": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "circular",
+                "rounded",
+                "square"
+              ]
+            },
+            "max": {
+              "type": "number"
+            },
+            "total": {
+              "type": "number"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Backdrop": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Backdrop"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "invisible": {
+              "type": "boolean"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Badge": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Badge"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "default",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "overlap": {
+              "type": "string",
+              "enum": [
+                "rectangular",
+                "circular"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "dot"
+              ]
+            },
+            "vertical": {
+              "type": "string",
+              "enum": [
+                "top"
+              ]
+            },
+            "horizontal": {
+              "type": "string",
+              "enum": [
+                "right"
+              ]
+            },
+            "invisible": {
+              "type": "boolean"
+            },
+            "max": {
+              "type": "number"
+            },
+            "showZero": {
+              "type": "boolean"
+            },
+            "className": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "BottomNavigation": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "BottomNavigation"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "showLabels": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "BottomNavigationAction": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "BottomNavigationAction"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "showLabel": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Box": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Box"
+            },
+            "sx": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Breadcrumbs": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Breadcrumbs"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "expanded": {
+              "type": "boolean"
+            },
+            "expandText": {
+              "type": "string"
+            },
+            "itemsAfterCollapse": {
+              "type": "number"
+            },
+            "itemsBeforeCollapse": {
+              "type": "number"
+            },
+            "maxItems": {
+              "type": "number"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Button": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Button"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "inherit",
+                "primary",
+                "secondary",
+                "success",
+                "error",
+                "info",
+                "warning"
+              ]
+            },
+            "loadingPosition": {
+              "type": "string",
+              "enum": [
+                "start",
+                "end",
+                "center"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "text",
+                "outlined",
+                "contained"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableElevation": {
+              "type": "boolean"
+            },
+            "disableFocusRipple": {
+              "type": "boolean"
+            },
+            "fullWidth": {
+              "type": "boolean"
+            },
+            "href": {
+              "type": "string"
+            },
+            "loading": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ButtonBase": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ButtonBase"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "centerRipple": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableRipple": {
+              "type": "boolean"
+            },
+            "disableTouchRipple": {
+              "type": "boolean"
+            },
+            "focusRipple": {
+              "type": "boolean"
+            },
+            "focusVisibleClassName": {
+              "type": "string"
+            },
+            "nativeButton": {
+              "type": "boolean"
+            },
+            "type": {
+              "type": "string"
+            },
+            "href": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ButtonGroup": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ButtonGroup"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "inherit",
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "vertical",
+                "horizontal"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "text",
+                "outlined",
+                "contained"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableElevation": {
+              "type": "boolean"
+            },
+            "disableFocusRipple": {
+              "type": "boolean"
+            },
+            "disableRipple": {
+              "type": "boolean"
+            },
+            "fullWidth": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Card": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Card"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "raised": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "CardActionArea": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "CardActionArea"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "focusVisibleClassName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "CardActions": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "CardActions"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "disableSpacing": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "CardContent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "CardContent"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "CardHeader": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "CardHeader"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "disableTypography": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "CardMedia": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "CardMedia"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "image": {
+              "type": "string"
+            },
+            "src": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Checkbox": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Checkbox"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning",
+                "default"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large"
+              ]
+            },
+            "indeterminate": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Chip": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Chip"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "default",
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "filled",
+                "outlined"
+              ]
+            },
+            "clickable": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "nativeButton": {
+              "type": "boolean"
+            },
+            "skipFocusWhenDisabled": {
+              "type": "boolean"
+            },
+            "tabIndex": {
+              "type": "number"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "CircularProgress": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "CircularProgress"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning",
+                "inherit"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "determinate",
+                "indeterminate"
+              ]
+            },
+            "disableShrink": {
+              "type": "boolean"
+            },
+            "enableTrackSlot": {
+              "type": "boolean"
+            },
+            "max": {
+              "type": "number"
+            },
+            "min": {
+              "type": "number"
+            },
+            "size": {
+              "type": "number"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ClickAwayListener": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ClickAwayListener"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "disableReactTree": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Collapse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Collapse"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ]
+            },
+            "className": {
+              "type": "string"
+            },
+            "collapsedSize": {
+              "type": "string"
+            },
+            "in": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Container": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Container"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "disableGutters": {
+              "type": "boolean"
+            },
+            "fixed": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "CssBaseline": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "CssBaseline"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "enableColorScheme": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Dialog": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Dialog"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "dialog",
+                "alertdialog"
+              ]
+            },
+            "scroll": {
+              "type": "string",
+              "enum": [
+                "body",
+                "paper"
+              ]
+            },
+            "fullScreen": {
+              "type": "boolean"
+            },
+            "fullWidth": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "DialogActions": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "DialogActions"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "disableSpacing": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "DialogContent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "DialogContent"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "dividers": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "DialogContentText": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "DialogContentText"
+            },
+            "sx": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "DialogTitle": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "DialogTitle"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Divider": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Divider"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ]
+            },
+            "textAlign": {
+              "type": "string",
+              "enum": [
+                "center",
+                "right",
+                "left"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "fullWidth",
+                "inset",
+                "middle"
+              ]
+            },
+            "absolute": {
+              "type": "boolean"
+            },
+            "flexItem": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Drawer": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Drawer"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "anchor": {
+              "type": "string",
+              "enum": [
+                "left",
+                "top",
+                "right",
+                "bottom"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "permanent",
+                "persistent",
+                "temporary"
+              ]
+            },
+            "elevation": {
+              "type": "number"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Fab": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Fab"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "circular",
+                "extended"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableFocusRipple": {
+              "type": "boolean"
+            },
+            "disableRipple": {
+              "type": "boolean"
+            },
+            "href": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Fade": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Fade"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "appear": {
+              "type": "boolean"
+            },
+            "in": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "FilledInput": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "FilledInput"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "hiddenLabel": {
+              "type": "boolean"
+            },
+            "disableUnderline": {
+              "type": "boolean"
+            },
+            "notched": {
+              "type": "boolean"
+            },
+            "muiName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "FormControl": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "FormControl"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "margin": {
+              "type": "string",
+              "enum": [
+                "dense",
+                "normal",
+                "none"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "outlined",
+                "filled"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "error": {
+              "type": "boolean"
+            },
+            "fullWidth": {
+              "type": "boolean"
+            },
+            "focused": {
+              "type": "boolean"
+            },
+            "hiddenLabel": {
+              "type": "boolean"
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "FormControlLabel": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "FormControlLabel"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "labelPlacement": {
+              "type": "string",
+              "enum": [
+                "end",
+                "start",
+                "top",
+                "bottom"
+              ]
+            },
+            "checked": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableTypography": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "required": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "FormGroup": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "FormGroup"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "row": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "FormHelperText": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "FormHelperText"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "margin": {
+              "type": "string",
+              "enum": [
+                "dense"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "outlined",
+                "filled"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "error": {
+              "type": "boolean"
+            },
+            "filled": {
+              "type": "boolean"
+            },
+            "focused": {
+              "type": "boolean"
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "FormLabel": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "FormLabel"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "error": {
+              "type": "boolean"
+            },
+            "filled": {
+              "type": "boolean"
+            },
+            "focused": {
+              "type": "boolean"
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Grid": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Grid"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "container": {
+              "type": "boolean"
+            },
+            "unstable_level": {
+              "type": "number"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Grow": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Grow"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "appear": {
+              "type": "boolean"
+            },
+            "in": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Icon": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Icon"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "inherit",
+                "action",
+                "disabled",
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "fontSize": {
+              "type": "string",
+              "enum": [
+                "inherit",
+                "large",
+                "medium",
+                "small"
+              ]
+            },
+            "baseClassName": {
+              "type": "string"
+            },
+            "muiName": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "IconButton": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "IconButton"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "inherit",
+                "default",
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "edge": {
+              "type": "string",
+              "enum": [
+                "start",
+                "end"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableFocusRipple": {
+              "type": "boolean"
+            },
+            "loading": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ImageList": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ImageList"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "masonry",
+                "quilted",
+                "standard",
+                "woven"
+              ]
+            },
+            "cols": {
+              "type": "number"
+            },
+            "gap": {
+              "type": "number"
+            },
+            "rowHeight": {
+              "type": "number"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ImageListItem": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ImageListItem"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "cols": {
+              "type": "number"
+            },
+            "rows": {
+              "type": "number"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ImageListItemBar": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ImageListItemBar"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "actionPosition": {
+              "type": "string",
+              "enum": [
+                "left",
+                "right"
+              ]
+            },
+            "position": {
+              "type": "string",
+              "enum": [
+                "below",
+                "top",
+                "bottom"
+              ]
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "InitColorSchemeScript": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "InitColorSchemeScript"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "defaultMode": {
+              "type": "string",
+              "enum": [
+                "system",
+                "light",
+                "dark"
+              ]
+            },
+            "attribute": {
+              "type": "string",
+              "enum": [
+                "class",
+                "data"
+              ]
+            },
+            "defaultLightColorScheme": {
+              "type": "string"
+            },
+            "defaultDarkColorScheme": {
+              "type": "string"
+            },
+            "colorSchemeNode": {
+              "type": "string"
+            },
+            "modeStorageKey": {
+              "type": "string"
+            },
+            "colorSchemeStorageKey": {
+              "type": "string"
+            },
+            "nonce": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Input": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Input"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "disableUnderline": {
+              "type": "boolean"
+            },
+            "notched": {
+              "type": "boolean"
+            },
+            "muiName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "InputAdornment": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "InputAdornment"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "position": {
+              "type": "string",
+              "enum": [
+                "start",
+                "end"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "outlined",
+                "filled"
+              ]
+            },
+            "disablePointerEvents": {
+              "type": "boolean"
+            },
+            "disableTypography": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "InputBase": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "InputBase"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "margin": {
+              "type": "string",
+              "enum": [
+                "dense",
+                "none",
+                "normal"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "autoComplete": {
+              "type": "string"
+            },
+            "autoFocus": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableInjectingGlobalStyles": {
+              "type": "boolean"
+            },
+            "error": {
+              "type": "boolean"
+            },
+            "fullWidth": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "string"
+            },
+            "multiline": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "placeholder": {
+              "type": "string"
+            },
+            "readOnly": {
+              "type": "boolean"
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "filled": {
+              "type": "boolean"
+            },
+            "focused": {
+              "type": "boolean"
+            },
+            "rows": {
+              "type": "string"
+            },
+            "maxRows": {
+              "type": "string"
+            },
+            "minRows": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "InputLabel": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "InputLabel"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "margin": {
+              "type": "string",
+              "enum": [
+                "dense"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "outlined",
+                "filled"
+              ]
+            },
+            "disableAnimation": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "error": {
+              "type": "boolean"
+            },
+            "focused": {
+              "type": "boolean"
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "shrink": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "LinearProgress": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "LinearProgress"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning",
+                "inherit"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "determinate",
+                "indeterminate",
+                "buffer",
+                "query"
+              ]
+            },
+            "max": {
+              "type": "number"
+            },
+            "min": {
+              "type": "number"
+            },
+            "value": {
+              "type": "number"
+            },
+            "valueBuffer": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Link": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Link"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "underline": {
+              "type": "string",
+              "enum": [
+                "none",
+                "hover",
+                "always"
+              ]
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "List": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "List"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "dense": {
+              "type": "boolean"
+            },
+            "disablePadding": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ListItem": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ListItem"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "alignItems": {
+              "type": "string",
+              "enum": [
+                "flex-start",
+                "center"
+              ]
+            },
+            "dense": {
+              "type": "boolean"
+            },
+            "disableGutters": {
+              "type": "boolean"
+            },
+            "disablePadding": {
+              "type": "boolean"
+            },
+            "divider": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ListItemAvatar": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ListItemAvatar"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ListItemButton": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ListItemButton"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "alignItems": {
+              "type": "string",
+              "enum": [
+                "flex-start",
+                "center"
+              ]
+            },
+            "autoFocus": {
+              "type": "boolean"
+            },
+            "dense": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableGutters": {
+              "type": "boolean"
+            },
+            "divider": {
+              "type": "boolean"
+            },
+            "selected": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ListItemIcon": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ListItemIcon"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ListItemSecondaryAction": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ListItemSecondaryAction"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "muiName": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ListItemText": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ListItemText"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "disableTypography": {
+              "type": "boolean"
+            },
+            "inset": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ListSubheader": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ListSubheader"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "default",
+                "primary",
+                "inherit"
+              ]
+            },
+            "disableGutters": {
+              "type": "boolean"
+            },
+            "disableSticky": {
+              "type": "boolean"
+            },
+            "inset": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Menu": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Menu"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "menu",
+                "selectedMenu"
+              ]
+            },
+            "autoFocus": {
+              "type": "boolean"
+            },
+            "disableAutoFocusItem": {
+              "type": "boolean"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "MenuItem": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "MenuItem"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "autoFocus": {
+              "type": "boolean"
+            },
+            "dense": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableGutters": {
+              "type": "boolean"
+            },
+            "divider": {
+              "type": "boolean"
+            },
+            "selected": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "MenuList": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "MenuList"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "menu",
+                "selectedMenu"
+              ]
+            },
+            "autoFocus": {
+              "type": "boolean"
+            },
+            "autoFocusItem": {
+              "type": "boolean"
+            },
+            "disabledItemsFocusable": {
+              "type": "boolean"
+            },
+            "disableListWrap": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "MobileStepper": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "MobileStepper"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "position": {
+              "type": "string",
+              "enum": [
+                "bottom",
+                "top",
+                "static"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "text",
+                "dots",
+                "progress"
+              ]
+            },
+            "activeStep": {
+              "type": "number"
+            },
+            "steps": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Modal": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Modal"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "reason": {
+              "type": "string",
+              "enum": [
+                "backdropClick",
+                "escapeKeyDown"
+              ]
+            },
+            "exited": {
+              "type": "boolean"
+            },
+            "className": {
+              "type": "string"
+            },
+            "closeAfterTransition": {
+              "type": "boolean"
+            },
+            "disableAutoFocus": {
+              "type": "boolean"
+            },
+            "disableEnforceFocus": {
+              "type": "boolean"
+            },
+            "disableRestoreFocus": {
+              "type": "boolean"
+            },
+            "disableScrollLock": {
+              "type": "boolean"
+            },
+            "hideBackdrop": {
+              "type": "boolean"
+            },
+            "keepMounted": {
+              "type": "boolean"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "NativeSelect": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "NativeSelect"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "outlined",
+                "filled"
+              ]
+            },
+            "muiName": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "NoSsr": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "NoSsr"
+            },
+            "sx": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "OutlinedInput": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "OutlinedInput"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "notched": {
+              "type": "boolean"
+            },
+            "muiName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Pagination": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Pagination"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "standard"
+              ]
+            },
+            "shape": {
+              "type": "string",
+              "enum": [
+                "circular",
+                "rounded"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "text",
+                "outlined"
+              ]
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "PaginationItem": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "PaginationItem"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "primary",
+                "secondary"
+              ]
+            },
+            "shape": {
+              "type": "string",
+              "enum": [
+                "circular",
+                "rounded"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "text",
+                "outlined"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "nativeButton": {
+              "type": "boolean"
+            },
+            "selected": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Paper": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Paper"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "elevation",
+                "outlined"
+              ]
+            },
+            "elevation": {
+              "type": "number"
+            },
+            "square": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Popover": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Popover"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "vertical": {
+              "type": "string",
+              "enum": [
+                "top"
+              ]
+            },
+            "horizontal": {
+              "type": "string",
+              "enum": [
+                "left"
+              ]
+            },
+            "top": {
+              "type": "number"
+            },
+            "left": {
+              "type": "number"
+            },
+            "elevation": {
+              "type": "number"
+            },
+            "marginThreshold": {
+              "type": "number"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Popper": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Popper"
+            },
+            "sx": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Portal": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Portal"
+            },
+            "sx": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Radio": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Radio"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning",
+                "default"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "RadioGroup": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "RadioGroup"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Rating": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Rating"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large"
+              ]
+            },
+            "value": {
+              "type": "number"
+            },
+            "defaultValue": {
+              "type": "number"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "highlightSelectedOnly": {
+              "type": "boolean"
+            },
+            "max": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "precision": {
+              "type": "number"
+            },
+            "readOnly": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ScopedCssBaseline": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ScopedCssBaseline"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "enableColorScheme": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Select": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Select"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "outlined"
+              ]
+            },
+            "autoWidth": {
+              "type": "boolean"
+            },
+            "defaultOpen": {
+              "type": "boolean"
+            },
+            "displayEmpty": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "string"
+            },
+            "labelId": {
+              "type": "string"
+            },
+            "multiple": {
+              "type": "boolean"
+            },
+            "native": {
+              "type": "boolean"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "muiName": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Skeleton": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Skeleton"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "animation": {
+              "type": "string",
+              "enum": [
+                "pulse",
+                "wave"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "text",
+                "rectangular",
+                "rounded",
+                "circular"
+              ]
+            },
+            "height": {
+              "type": "number"
+            },
+            "width": {
+              "type": "number"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Slide": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Slide"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "left",
+                "right",
+                "up",
+                "down"
+              ]
+            },
+            "appear": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Slider": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Slider"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "track": {
+              "type": "string",
+              "enum": [
+                "normal"
+              ]
+            },
+            "valueLabelDisplay": {
+              "type": "string",
+              "enum": [
+                "on",
+                "auto",
+                "off"
+              ]
+            },
+            "dragging": {
+              "type": "boolean"
+            },
+            "marked": {
+              "type": "boolean"
+            },
+            "focusedThumbIndex": {
+              "type": "number"
+            },
+            "className": {
+              "type": "string"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableSwap": {
+              "type": "boolean"
+            },
+            "marks": {
+              "type": "boolean"
+            },
+            "max": {
+              "type": "number"
+            },
+            "min": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "shiftStep": {
+              "type": "number"
+            },
+            "step": {
+              "type": "number"
+            },
+            "tabIndex": {
+              "type": "number"
+            },
+            "valueLabelFormat": {
+              "type": "string"
+            },
+            "index": {
+              "type": "number"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Snackbar": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Snackbar"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "vertical": {
+              "type": "string",
+              "enum": [
+                "bottom"
+              ]
+            },
+            "horizontal": {
+              "type": "string",
+              "enum": [
+                "left"
+              ]
+            },
+            "autoHideDuration": {
+              "type": "number"
+            },
+            "disableWindowBlurListener": {
+              "type": "boolean"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "resumeHideDuration": {
+              "type": "number"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SnackbarContent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SnackbarContent"
+            },
+            "sx": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SpeedDial": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SpeedDial"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "up",
+                "down",
+                "left",
+                "right"
+              ]
+            },
+            "ariaLabel": {
+              "type": "string"
+            },
+            "hidden": {
+              "type": "boolean"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SpeedDialAction": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SpeedDialAction"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "delay": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SpeedDialIcon": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SpeedDialIcon"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "muiName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Stack": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Stack"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "useFlexGap": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Step": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Step"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "active": {
+              "type": "boolean"
+            },
+            "completed": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "expanded": {
+              "type": "boolean"
+            },
+            "index": {
+              "type": "number"
+            },
+            "last": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "StepButton": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "StepButton"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "ignoredProps": {
+              "type": "string",
+              "enum": [
+                "disabled"
+              ]
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "StepConnector": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "StepConnector"
+            },
+            "sx": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "StepContent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "StepContent"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "StepIcon": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "StepIcon"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "active": {
+              "type": "boolean"
+            },
+            "completed": {
+              "type": "boolean"
+            },
+            "error": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "StepLabel": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "StepLabel"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "error": {
+              "type": "boolean"
+            },
+            "muiName": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Stepper": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Stepper"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "activeStep": {
+              "type": "number"
+            },
+            "alternativeLabel": {
+              "type": "boolean"
+            },
+            "nonLinear": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SvgIcon": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SvgIcon"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "inherit",
+                "action",
+                "disabled",
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "fontSize": {
+              "type": "string",
+              "enum": [
+                "inherit",
+                "large",
+                "medium",
+                "small"
+              ]
+            },
+            "htmlColor": {
+              "type": "string"
+            },
+            "inheritViewBox": {
+              "type": "boolean"
+            },
+            "shapeRendering": {
+              "type": "string"
+            },
+            "titleAccess": {
+              "type": "string"
+            },
+            "viewBox": {
+              "type": "string"
+            },
+            "muiName": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SwipeableDrawer": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SwipeableDrawer"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "allowSwipeInChildren": {
+              "type": "boolean"
+            },
+            "disableBackdropTransition": {
+              "type": "boolean"
+            },
+            "disableDiscovery": {
+              "type": "boolean"
+            },
+            "disableSwipeToOpen": {
+              "type": "boolean"
+            },
+            "hysteresis": {
+              "type": "number"
+            },
+            "minFlingVelocity": {
+              "type": "number"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "swipeAreaWidth": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Switch": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Switch"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning",
+                "default"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Tab": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Tab"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "iconPosition": {
+              "type": "string",
+              "enum": [
+                "top",
+                "bottom",
+                "start",
+                "end"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableFocusRipple": {
+              "type": "boolean"
+            },
+            "icon": {
+              "type": "string"
+            },
+            "wrapped": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TabScrollButton": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TabScrollButton"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "left",
+                "right"
+              ]
+            },
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ]
+            },
+            "isRtl": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Table": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Table"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "padding": {
+              "type": "string",
+              "enum": [
+                "normal",
+                "checkbox",
+                "none"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "stickyHeader": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TableBody": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TableBody"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TableCell": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TableCell"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "align": {
+              "type": "string",
+              "enum": [
+                "inherit",
+                "left",
+                "center",
+                "right",
+                "justify"
+              ]
+            },
+            "padding": {
+              "type": "string",
+              "enum": [
+                "normal",
+                "checkbox",
+                "none"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "head",
+                "body",
+                "footer"
+              ]
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TableContainer": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TableContainer"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TableFooter": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TableFooter"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TableHead": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TableHead"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TablePagination": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TablePagination"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "first",
+                "last",
+                "next",
+                "previous"
+              ]
+            },
+            "from": {
+              "type": "number"
+            },
+            "to": {
+              "type": "number"
+            },
+            "count": {
+              "type": "number"
+            },
+            "page": {
+              "type": "number"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "rowsPerPage": {
+              "type": "number"
+            },
+            "value": {
+              "type": "number"
+            },
+            "label": {
+              "type": "string"
+            },
+            "showFirstButton": {
+              "type": "boolean"
+            },
+            "showLastButton": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TablePaginationActions": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TablePaginationActions"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "first",
+                "last",
+                "next",
+                "previous"
+              ]
+            },
+            "className": {
+              "type": "string"
+            },
+            "count": {
+              "type": "number"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "page": {
+              "type": "number"
+            },
+            "rowsPerPage": {
+              "type": "number"
+            },
+            "showFirstButton": {
+              "type": "boolean"
+            },
+            "showLastButton": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TableRow": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TableRow"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "hover": {
+              "type": "boolean"
+            },
+            "selected": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TableSortLabel": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TableSortLabel"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "active": {
+              "type": "boolean"
+            },
+            "hideSortIcon": {
+              "type": "boolean"
+            },
+            "className": {
+              "type": "string"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Tabs": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Tabs"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "indicatorColor": {
+              "type": "string",
+              "enum": [
+                "secondary",
+                "primary"
+              ]
+            },
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ]
+            },
+            "scrollButtons": {
+              "type": "string",
+              "enum": [
+                "auto"
+              ]
+            },
+            "textColor": {
+              "type": "string",
+              "enum": [
+                "secondary",
+                "primary",
+                "inherit"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "scrollable",
+                "fullWidth"
+              ]
+            },
+            "vertical": {
+              "type": "boolean"
+            },
+            "fixed": {
+              "type": "boolean"
+            },
+            "hideScrollbar": {
+              "type": "boolean"
+            },
+            "scrollableX": {
+              "type": "boolean"
+            },
+            "scrollableY": {
+              "type": "boolean"
+            },
+            "centered": {
+              "type": "boolean"
+            },
+            "scrollButtonsHideMobile": {
+              "type": "boolean"
+            },
+            "allowScrollButtonsMobile": {
+              "type": "boolean"
+            },
+            "selectionFollowsFocus": {
+              "type": "boolean"
+            },
+            "visibleScrollbar": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TextField": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TextField"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "outlined"
+              ]
+            },
+            "autoComplete": {
+              "type": "string"
+            },
+            "autoFocus": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "error": {
+              "type": "boolean"
+            },
+            "fullWidth": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "string"
+            },
+            "multiline": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "placeholder": {
+              "type": "string"
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "rows": {
+              "type": "string"
+            },
+            "maxRows": {
+              "type": "string"
+            },
+            "minRows": {
+              "type": "string"
+            },
+            "select": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "TextareaAutosize": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "TextareaAutosize"
+            },
+            "sx": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ToggleButton": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ToggleButton"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "disableFocusRipple": {
+              "type": "boolean"
+            },
+            "fullWidth": {
+              "type": "boolean"
+            },
+            "selected": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ToggleButtonGroup": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ToggleButtonGroup"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "primary",
+                "secondary",
+                "error",
+                "info",
+                "success",
+                "warning"
+              ]
+            },
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ]
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large"
+              ]
+            },
+            "exclusive": {
+              "type": "boolean"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "fullWidth": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Toolbar": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Toolbar"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "regular",
+                "dense"
+              ]
+            },
+            "disableGutters": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Tooltip": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Tooltip"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "arrow": {
+              "type": "boolean"
+            },
+            "describeChild": {
+              "type": "boolean"
+            },
+            "disableFocusListener": {
+              "type": "boolean"
+            },
+            "disableHoverListener": {
+              "type": "boolean"
+            },
+            "disableInteractive": {
+              "type": "boolean"
+            },
+            "disableTouchListener": {
+              "type": "boolean"
+            },
+            "enterDelay": {
+              "type": "number"
+            },
+            "enterNextDelay": {
+              "type": "number"
+            },
+            "enterTouchDelay": {
+              "type": "number"
+            },
+            "followCursor": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "string"
+            },
+            "leaveDelay": {
+              "type": "number"
+            },
+            "leaveTouchDelay": {
+              "type": "number"
+            },
+            "open": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Typography": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Typography"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "align": {
+              "type": "string",
+              "enum": [
+                "inherit",
+                "left",
+                "center",
+                "right",
+                "justify"
+              ]
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "success",
+                "error",
+                "info",
+                "warning"
+              ]
+            },
+            "h1": {
+              "type": "string",
+              "enum": [
+                "h1"
+              ]
+            },
+            "h2": {
+              "type": "string",
+              "enum": [
+                "h2"
+              ]
+            },
+            "h3": {
+              "type": "string",
+              "enum": [
+                "h3"
+              ]
+            },
+            "h4": {
+              "type": "string",
+              "enum": [
+                "h4"
+              ]
+            },
+            "h5": {
+              "type": "string",
+              "enum": [
+                "h5"
+              ]
+            },
+            "h6": {
+              "type": "string",
+              "enum": [
+                "h6"
+              ]
+            },
+            "subtitle1": {
+              "type": "string",
+              "enum": [
+                "h6"
+              ]
+            },
+            "subtitle2": {
+              "type": "string",
+              "enum": [
+                "h6"
+              ]
+            },
+            "body1": {
+              "type": "string",
+              "enum": [
+                "p"
+              ]
+            },
+            "body2": {
+              "type": "string",
+              "enum": [
+                "p"
+              ]
+            },
+            "inherit": {
+              "type": "string",
+              "enum": [
+                "p"
+              ]
+            },
+            "gutterBottom": {
+              "type": "boolean"
+            },
+            "noWrap": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Unstable_TrapFocus": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Unstable_TrapFocus"
+            },
+            "sx": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Zoom": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Zoom"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "appear": {
+              "type": "boolean"
+            },
+            "in": {
+              "type": "boolean"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ThemeProvider": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ThemeProvider"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "CssVarsProvider": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "CssVarsProvider"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "Experimental_CssVarsProvider": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "Experimental_CssVarsProvider"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "FormLabelRoot": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "FormLabelRoot"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "ModalManager": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "ModalManager"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "PopoverPaper": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "PopoverPaper"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "PopoverRoot": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "PopoverRoot"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SelectFocusSourceProvider": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SelectFocusSourceProvider"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SliderMark": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SliderMark"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SliderMarkLabel": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SliderMarkLabel"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SliderRail": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SliderRail"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SliderRoot": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SliderRoot"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SliderThumb": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SliderThumb"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SliderTrack": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SliderTrack"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
+    },
+    "SliderValueLabel": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "$ref": "#/$defs/CatalogComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "component": {
+              "const": "SliderValueLabel"
+            },
+            "sx": {
+              "type": "object"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/AnyComponent"
+              }
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ]
     }
   }
 }
